@@ -1,4 +1,4 @@
-cs_work
+cs_projects
 =======
 
-Homework and projects for my CS class. 
+Projects I wrote for my CS class.
