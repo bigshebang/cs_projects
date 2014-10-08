@@ -4,4 +4,9 @@
  *	Header for the scanner "module" containing its function prototypes.
  */
 
-int classifier(char);
+#include "matrix.h"
+
+#define ERROR_STATE	99
+
+int getClass(char);
+int scan(indexStruct[][N_CC], const int*, const int*);
