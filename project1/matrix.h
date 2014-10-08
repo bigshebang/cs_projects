@@ -8,12 +8,12 @@
 #include "classes.h"
 #include <stdio.h>
 
-struct indexStruct //struct to contain values for each spot in the matrix
+typedef struct indexStruct //struct to contain values for each spot in the matrix
 {
 	    int nextState; 	//next state to go to
 	    char action; 	//char representing action to take, (s)ave or (d)elete
-};
+} indexStruct;
 
 int strToInt(char[]);
-void initMatrix(FILE*, struct indexStruct[][N_CC], int);
-void printMatrix(struct indexStruct[][N_CC], int);
+void initMatrix(FILE*, indexStruct[][N_CC], int);
+void printMatrix(indexStruct[][N_CC], int);
