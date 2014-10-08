@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
 	fclose(tmFile);
 
-	putchar(' '); //add extra space at beginning for proper spacing
+	printf("Scanning using the following matrix:\n ");
 	for(int i = 0; i < N_CC; i++) //print heading
 	{
 		printf("   %2d", i);
