@@ -58,10 +58,10 @@ int main(int argc, char *argv[])
 
 	int status = 0; //return status of scanning function
 
-	while(status < 1) //continue scanning until EOF is reached
+	while(status < EOF_ACCEPT) //continue scanning until EOF is reached
 	{
 		status = scan(tm, &startState, &acceptState);
-		if(status < 0)
+		if(status == ERROR_STATE_RET || status == ERROR_STATE_EOF)
 			puts("rejected");
 	}
 
