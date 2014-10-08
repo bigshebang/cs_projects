@@ -5,17 +5,16 @@
  *	to scan and tokenize input.
  */
 
-#include "classes.h"
 #include "scanner.h"
-#include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 
-/*	Function: classifier
+/*	Function: getClass
  *	Purpose: Take in a C string assuming that it is or contains integer values,
  *	and convert it to an integer.
  *	It returns an int which is the converted value from the C string.
  */
-int classifier(char c)
+int getClass(char c)
 {
 	if(c == '\t' || c == ' ')
 		return CC_WS;
@@ -41,4 +40,53 @@ int classifier(char c)
 		return CC_EOF;
 	else
 		return CC_ERROR;
+}
+
+/*	Function: classifier
+ *	Purpose: Take in a C string assuming that it is or contains integer values,
+ *	and convert it to an integer.
+ *	It returns an int which is the converted value from the C string.
+ */
+int scan(indexStruct tempTm[][N_CC], const int *startState,
+		 const int *acceptState)
+{
+	int curState = *startState;
+	char buf[256]; //buffer to hold recognized tokens
+	char c;
+
+	printf("%d ", curState);
+
+	while(1)
+	{
+		//get and classify next char
+		c = getchar();
+		int curClass = getClass(c);
+
+		//append current char to buffer if tm says to save
+		if(tempTm[curState][curClass].action == 's')
+			buf[strlen(buf)] = c;
+
+		//get and print next state
+		curState = tempTm[curState][curClass].nextState;
+		printf("%d ", curState);
+
+		//if accepting state, print recognized or EOF
+		if(curState == *acceptState)
+		{
+			int ret = (curClass == CC_EOF) ? 1 : 0; //return value
+
+			if(strlen(buf) != 0)
+				printf("recognized '%s'\n", buf);
+			else if(ret) //if buffer is empty and current char is EOF
+				printf("EOF\n");
+
+			return ret;
+		}
+		//if error state, get next char until whitespace, then return negative
+		else if(curState == ERROR_STATE)
+		{
+			while(getClass(getchar()) != CC_WS);
+			return -1;
+		}
+	}
 }
