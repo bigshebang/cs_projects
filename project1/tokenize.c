@@ -5,7 +5,6 @@
  *	outputting text based upon the input text and the given transition matrix.
  */
 
-#include "matrix.h"
 #include "scanner.h"
 
 //define exit statuses used in program
@@ -44,7 +43,7 @@ int main(int argc, char *argv[])
 	fscanf(tmFile, "%*s %d %*s %d %*s %d ", &numStates, &startState, &acceptState);
 
 	//create matrix and initialize values according to tm file
-	struct indexStruct tm[numStates][N_CC];
+	indexStruct tm[numStates][N_CC];
 	initMatrix(tmFile, tm, numStates);
 
 	fclose(tmFile);
@@ -56,6 +55,15 @@ int main(int argc, char *argv[])
 	}
 
 	printMatrix(tm, numStates); //print tm
+
+	int status = 0; //return status of scanning function
+
+	while(status < 1) //continue scanning until EOF is reached
+	{
+		status = scan(tm, &startState, &acceptState);
+		if(status < 0)
+			puts("rejected");
+	}
 
 	return EXIT_SUCCESS;
 }
