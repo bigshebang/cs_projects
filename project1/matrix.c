@@ -32,7 +32,7 @@ int strToInt(char str[])
  *	and convert it to an integer.
  *	It returns an int which is the converted value from the C string.
  */
-void initMatrix(FILE *fp, struct indexStruct tempTm[][N_CC], int numStates)
+void initMatrix(FILE *fp, indexStruct tempTm[][N_CC], int numStates)
 {
 	for(int i = 0; i < numStates; i++) //initialize to default values
 	{
@@ -76,7 +76,7 @@ void initMatrix(FILE *fp, struct indexStruct tempTm[][N_CC], int numStates)
  *	and convert it to an integer.
  *	It returns an int which is the converted value from the C string.
  */
-void printMatrix(struct indexStruct tempTm[][N_CC], int numStates)
+void printMatrix(indexStruct tempTm[][N_CC], int numStates)
 {
 	for(int i = 0; i < numStates; i++)
 	{
