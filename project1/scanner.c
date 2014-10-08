@@ -48,13 +48,16 @@ int getClass(char c)
  *				startState - const int pointer to the starting state
  *				acceptState - const int pointer to the accepting state
  *	Purpose: Scan or tokenize data from stdin based upon the tm passed as the
- *	parameter. Start at the given accepting state until reaching the accepting
+ *	parameter. Start at the given starting state until reaching the accepting
  *	state.
  *	Returns: An int which indicates the result of the scan. 0 means we reached
  *	the accepting state but did not get an EOF so there is more input to be
  *	processed. A positive number means an EOF was found. A negative number
  *	means that the given input was rejected and not recognized according to the
- *	given tm.
+ *	given tm. More specifically than that, a 1 means that EOF was found and
+ *	we ended in the accepting state, whereas a 2 means that EOF was found but
+ *	we ended in the error state. Also, a -1 indicates that the input was
+ *	rejected, but we did not reach EOF.
  */
 int scan(indexStruct tempTm[][N_CC], const int *startState,
 		 const int *acceptState)
@@ -82,7 +85,7 @@ int scan(indexStruct tempTm[][N_CC], const int *startState,
 		//if accepting state, print recognized or EOF
 		if(curState == *acceptState)
 		{
-			int ret = (curClass == CC_EOF) ? 1 : 0; //return value
+			int ret = (curClass == CC_EOF) ? EOF_ACCEPT : ACCEPT_STATE;
 
 			if(strlen(buf) != 0)
 			{
@@ -96,8 +99,12 @@ int scan(indexStruct tempTm[][N_CC], const int *startState,
 		//if error state, get next char until whitespace, then return negative
 		else if(curState == ERROR_STATE)
 		{
-			while(getClass(getchar()) != CC_WS);
-			return -1;
+			while((c = getClass(getchar())) != CC_WS)
+			{
+				if(c == EOF)
+					return ERROR_STATE_EOF;
+			}
+			return ERROR_STATE_RET;
 		}
 	}
 }
