@@ -8,7 +8,7 @@
 #include "classes.h"
 #include <stdio.h>
 
-typedef struct indexStruct //struct to contain values for each spot in the matrix
+typedef struct indexStruct //struct to contain values for each spot in the tm
 {
 	    int nextState; 	//next state to go to
 	    char action; 	//char representing action to take, (s)ave or (d)elete
