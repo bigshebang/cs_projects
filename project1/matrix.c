@@ -10,9 +10,10 @@
 #include <ctype.h>
 
 /*	Function: str_to_int
+ *	Parameters: str - array of characters that needs to be converted.
  *	Purpose: Take in a C string assuming that it is or contains integer values,
  *	and convert it to an integer.
- *	It returns an int which is the converted value from the C string.
+ *	Returns: An int which is the converted value from the C string.
  */
 int strToInt(char str[])
 {
@@ -28,9 +29,12 @@ int strToInt(char str[])
 }
 
 /*	Function: initMatrix
- *	Purpose: Take in a C string assuming that it is or contains integer values,
- *	and convert it to an integer.
- *	It returns an int which is the converted value from the C string.
+ *	Parameters: fp - file pointer to read from.
+ *				tempTm - 2d array of indexStructs
+ *				numStates - number of states in the 2d array
+ *	Purpose: Take a transition matrix file and create a 2d array containing
+ *	that information.
+ *	Returns: Nothing.
  */
 void initMatrix(FILE *fp, indexStruct tempTm[][N_CC], int numStates)
 {
@@ -72,9 +76,10 @@ void initMatrix(FILE *fp, indexStruct tempTm[][N_CC], int numStates)
 }
 
 /*	Function: printMatrix
- *	Purpose: Take in a C string assuming that it is or contains integer values,
- *	and convert it to an integer.
- *	It returns an int which is the converted value from the C string.
+ *	Parameters: tempTm - 2d array of indexStructs
+ *				numStates - number of states of the 2d array given
+ *	Purpose: Print a given 2d array of indexStructs.
+ *	Returns: Nothing.
  */
 void printMatrix(indexStruct tempTm[][N_CC], int numStates)
 {

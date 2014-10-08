@@ -6,7 +6,7 @@
 
 #include "matrix.h"
 
-#define ERROR_STATE	99
+#define ERROR_STATE	99 //error state
 
-int getClass(char);
-int scan(indexStruct[][N_CC], const int*, const int*);
+int getClass(char);										//classify a given char
+int scan(indexStruct[][N_CC], const int*, const int*);	//tokenize input

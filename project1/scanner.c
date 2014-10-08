@@ -10,9 +10,10 @@
 #include <ctype.h>
 
 /*	Function: getClass
- *	Purpose: Take in a C string assuming that it is or contains integer values,
- *	and convert it to an integer.
- *	It returns an int which is the converted value from the C string.
+ *	Paremeters: c - a character to classify
+ *	Purpose: Classify a character based on the character classes in classes.h
+ *	and return the integer value for that class.
+ *	Returns: An int representing the character class of the given char.
  */
 int getClass(char c)
 {
@@ -42,10 +43,18 @@ int getClass(char c)
 		return CC_ERROR;
 }
 
-/*	Function: classifier
- *	Purpose: Take in a C string assuming that it is or contains integer values,
- *	and convert it to an integer.
- *	It returns an int which is the converted value from the C string.
+/*	Function: scan
+ *	Parameters: tempTm - 2d array of indexStructs, the tm
+ *				startState - const int pointer to the starting state
+ *				acceptState - const int pointer to the accepting state
+ *	Purpose: Scan or tokenize data from stdin based upon the tm passed as the
+ *	parameter. Start at the given accepting state until reaching the accepting
+ *	state.
+ *	Returns: An int which indicates the result of the scan. 0 means we reached
+ *	the accepting state but did not get an EOF so there is more input to be
+ *	processed. A positive number means an EOF was found. A negative number
+ *	means that the given input was rejected and not recognized according to the
+ *	given tm.
  */
 int scan(indexStruct tempTm[][N_CC], const int *startState,
 		 const int *acceptState)

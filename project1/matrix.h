@@ -14,6 +14,6 @@ typedef struct indexStruct //struct to contain values for each spot in the matri
 	    char action; 	//char representing action to take, (s)ave or (d)elete
 } indexStruct;
 
-int strToInt(char[]);
-void initMatrix(FILE*, indexStruct[][N_CC], int);
-void printMatrix(indexStruct[][N_CC], int);
+int strToInt(char[]);								//convert ascii to int
+void initMatrix(FILE*, indexStruct[][N_CC], int);	//initialize tm
+void printMatrix(indexStruct[][N_CC], int);			//print a given tm
