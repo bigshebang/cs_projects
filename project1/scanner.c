@@ -51,7 +51,7 @@ int scan(indexStruct tempTm[][N_CC], const int *startState,
 		 const int *acceptState)
 {
 	int curState = *startState;
-	char buf[256]; //buffer to hold recognized tokens
+	char buf[256] = ""; //buffer to hold recognized tokens
 	char c;
 
 	printf("%d ", curState);
@@ -64,7 +64,7 @@ int scan(indexStruct tempTm[][N_CC], const int *startState,
 
 		//append current char to buffer if tm says to save
 		if(tempTm[curState][curClass].action == 's')
-			buf[strlen(buf)] = c;
+			strncat(buf, &c, sizeof(c));
 
 		//get and print next state
 		curState = tempTm[curState][curClass].nextState;
@@ -76,7 +76,9 @@ int scan(indexStruct tempTm[][N_CC], const int *startState,
 			int ret = (curClass == CC_EOF) ? 1 : 0; //return value
 
 			if(strlen(buf) != 0)
+			{
 				printf("recognized '%s'\n", buf);
+			}
 			else if(ret) //if buffer is empty and current char is EOF
 				printf("EOF\n");
 
