@@ -18,8 +18,8 @@
  *	formatted transition matrix and use that to scan and tokenize data given
  *	from stdin. This will print the transition matrix received and then
  *	the results from parsing the input using the given transition matrix.
- *	The exit status of the program, which would be 0 for success and non-zero
- *	for failure.
+ *	Returns the exit status of the program, which would be 0 for success and
+ *	non-zero for failure. Error numbers defined above.
  */
 int main(int argc, char *argv[])
 {
@@ -40,7 +40,8 @@ int main(int argc, char *argv[])
 
 	//declare state vars and read them in from the file
 	int numStates = 0, startState = 0, acceptState = 0;
-	fscanf(tmFile, "%*s %d %*s %d %*s %d ", &numStates, &startState, &acceptState);
+	fscanf(tmFile, "%*s %d %*s %d %*s %d ", &numStates, &startState,
+		   &acceptState);
 
 	//create matrix and initialize values according to tm file
 	indexStruct tm[numStates][N_CC];
@@ -48,11 +49,10 @@ int main(int argc, char *argv[])
 
 	fclose(tmFile);
 
+	//print heading for tm
 	printf("Scanning using the following matrix:\n ");
-	for(int i = 0; i < N_CC; i++) //print heading
-	{
+	for(int i = 0; i < N_CC; i++)
 		printf("   %2d", i);
-	}
 
 	printMatrix(tm, numStates); //print tm
 
