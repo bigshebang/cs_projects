@@ -99,7 +99,7 @@ int scan(indexStruct tempTm[][N_CC], const int *startState,
 		//if error state, get next char until whitespace, then return negative
 		else if(curState == ERROR_STATE)
 		{
-			while((c = getClass(getchar())) != CC_WS)
+			while(getClass((c = getchar())) != CC_WS)
 			{
 				if(c == EOF)
 					return ERROR_STATE_EOF;
