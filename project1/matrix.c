@@ -9,7 +9,7 @@
 #include <string.h>
 #include <ctype.h>
 
-/*	Function: str_to_int
+/*	Function: strToInt
  *	Parameters: str - array of characters that needs to be converted.
  *	Purpose: Take in a C string assuming that it is or contains integer values,
  *	and convert it to an integer.
