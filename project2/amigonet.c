@@ -83,8 +83,9 @@ void removeAmigo(User *user, User *ex_amigo)
 /*  Function: separation
  *  Parameters: user1 - ...
  *				user2 - ...
- *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
+ *  Purpose: ...
+ *  Returns: size_t which is the number of degrees of separation between
+ *	the two users.
  */
 size_t separation(const User *user1, const User *user2)
 {
@@ -99,5 +100,5 @@ size_t separation(const User *user1, const User *user2)
 void dump_data()
 {
 	traverse(users);
-	putchar('\n'); //put last blank line
+	puts("\n"); //put two newlines
 }
