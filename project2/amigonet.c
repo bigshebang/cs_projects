@@ -37,29 +37,29 @@ void destroy_amigonet()
 }
 
 /*  Function: addUser
- *  Parameters: cmp - pointer to a function that returns an int and takes two
- *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
+ *  Parameters: name - Name of user to add.
+ *  Purpose: Add a user to our list using the given name.
+ *  Returns: Nothing.
  */
 void addUser(const char *name)
 {
-	//code
+	buildTree(&users, name);
 }
 
 /*  Function: findUser
- *  Parameters: cmp - pointer to a function that returns an int and takes two
- *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
+ *  Parameters: name - Name of user to find.
+ *  Purpose: Find a user based on a given name. Use function in bst module.
+ *  Returns: Pointer to the user that we found, null if not found.
  */
 User *findUser(const char *name)
 {
-	//code
+	return locateUser(users, name);
 }
 
 /*  Function: addAmigo
  *  Parameters: cmp - pointer to a function that returns an int and takes two
  *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
+ *  Returns: Nothing.
  */
 void addAmigo(User *user, User *amigo)
 {
@@ -69,7 +69,7 @@ void addAmigo(User *user, User *amigo)
 /*  Function: removeAmigo
  *  Parameters: cmp - pointer to a function that returns an int and takes two
  *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
+ *  Returns: Nothing.
  */
 void removeAmigo(User *user, User *ex_amigo)
 {
@@ -77,7 +77,8 @@ void removeAmigo(User *user, User *ex_amigo)
 }
 
 /*  Function: separation
- *  Parameters: cmp - pointer to a function that returns an int and takes two
+ *  Parameters: user1 - ...
+ *				user2 - ...
  *  Purpose: Take in an ordering function and create a queue ADT.
  *  Returns: QueueADT, a pointer to a queueStruct.
  */
@@ -87,9 +88,9 @@ size_t separation(const User *user1, const User *user2)
 }
 
 /*  Function: dump_data
- *  Parameters: cmp - pointer to a function that returns an int and takes two
- *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
+ *  Parameters: None.
+ *  Purpose: 
+ *  Returns: Nothing.
  */
 void dump_data()
 {
