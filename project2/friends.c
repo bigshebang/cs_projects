@@ -95,7 +95,7 @@ void removeNode(User *user, User *exAmigo)
 
 		//while next is not null and it's not the node we want, go to next
 		while(nextNode != NULL && 
-			  (ret = strcmp(nextNode->user->name, exAmigo->name)) == 0)
+			  (ret = strcmp(nextNode->user->name, exAmigo->name)) != 0)
 		{
 			curNode = nextNode;
 			nextNode = curNode->next;
