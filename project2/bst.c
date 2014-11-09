@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
 	//print inorder
 	puts("Inorder:");
-	traverse(tn, INORDER);
+	traverse(tn);
 
 	User *tempUser = locateUser(tn, "Andrew");
 	if(tempUser != NULL)
@@ -110,6 +110,9 @@ void buildTree(TreeNode** root, const char* name)
 
 	//create and initialize user
 	temp->user = (User*)malloc(sizeof(User));
+	temp->user->amigos = NULL;
+
+	//handle adding name
 	temp->user->name = (char*)malloc(sizeof(name));
 	char *tempStr = temp->user->name;
 	strcpy(tempStr, name);
@@ -175,6 +178,23 @@ User *locateUser(const TreeNode *root, const char* name)
 	}
 
 	return NULL; //return null if treenode given was null
+}
+
+/*  Function: traverse
+ *  Parameters: root - Pointer to a TreeNode which is the root of the bst
+ *  Purpose: Traverse a given bst and print out the values of each node as we
+ *	process them.
+ *  Returns: Nothing.
+ */
+void traverse(const TreeNode *root)
+{
+	if(root != NULL)
+	{
+		traverse(root->left);
+		printf("\nUser: %s; Friends: ", root->user->name);
+		printList(root->user->amigos);
+		traverse(root->right);
+	}
 }
 
 /*  Function: cleanup_tree
