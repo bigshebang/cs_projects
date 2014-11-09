@@ -103,11 +103,21 @@ void removeNode(User *user, User *exAmigo)
 
 		if(ret == 0) //if it's a match, remove
 		{
-			if(curNode == nextNode) //if first node
-				user->amigos->firstFriend = nextNode->next;
-			else //if not first node
-				curNode->next = nextNode->next;
-			free(nextNode);
+			nodePtr temp1 = nextNode;
+			nodePtr temp2 = nextNode->next;
+			*nextNode = *(temp2);
+			free(temp2);
+			// if(curNode == nextNode) //if first node
+			// {
+			// 	puts("first node");
+			// 	user->amigos->firstFriend = nextNode->next;
+			// }
+			// else //if not first node
+			// {
+			// 	puts("not first node");
+			// 	curNode->next = nextNode->next;
+			// }
+			// free(nextNode);
 		}
 	}
 }
