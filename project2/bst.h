@@ -7,6 +7,7 @@
 #ifndef BST_H
 #define BST_H
 #include "amigonet.h"
+#include "friends.h"
 
 /// The definition of the tree structure
 typedef struct TreeNode {
@@ -44,7 +45,7 @@ User *locateUser(const TreeNode *root, const char* name);
 /// args -
 ///        root - a pointer to the root of the tree to traverse
 ///        type - the traversal type
-// void traverse(const TreeNode *root, const TraversalType type);
+void traverse(const TreeNode *root);
 
 /// cleanup_tree()
 ///    Cleanup all memory management associated with the nodes on the heap
