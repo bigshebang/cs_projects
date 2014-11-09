@@ -134,7 +134,8 @@ void buildTree(TreeNode** root, const char* name)
 			
 			if(ret == 0) //if already exists print error and exit
 			{
-				fprintf(stderr, "Cannot add user '%s'. User already exists.");
+				fprintf(stderr, "Cannot add user '%s'. User already exists.",
+						name);
 				return;
 			}
 			else if(ret < 0) //if new element's data < current element's data
