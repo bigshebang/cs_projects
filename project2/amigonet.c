@@ -59,8 +59,11 @@ User *findUser(const char *name)
  */
 void addAmigo(User *user, User *amigo)
 {
+	puts("in add amigo");
 	addNode(user, amigo);
+	puts("after first add of %s to %s", amigo->name, user->name);
 	addNode(amigo, user);
+	puts("after second add of %s to %s", user->name, amigo->name);
 }
 
 /*  Function: removeAmigo
@@ -70,8 +73,11 @@ void addAmigo(User *user, User *amigo)
  */
 void removeAmigo(User *user, User *ex_amigo)
 {
+	puts("in remove amigo");
 	removeNode(user, ex_amigo);
+	puts("after first remove");
 	removeNode(ex_amigo, user);
+	puts("after second remove");
 }
 
 /*  Function: separation
@@ -92,7 +98,9 @@ size_t separation(const User *user1, const User *user2)
  */
 void dump_data()
 {
+	puts("in dump data");
 	putchar('\n'); //put initial blank line
 	traverse(users);
 	putchar('\n'); //put last blank line
+	puts("after dump data")
 }
