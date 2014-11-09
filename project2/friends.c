@@ -137,14 +137,18 @@ void printList(FriendStruct *friends)
 	//if friends and friend list is not null, print list
 	if(friends != NULL && friends->firstFriend != NULL)
 	{
+		puts("in if of printlist");
 		nodePtr curNode = friends->firstFriend;
 		nodePtr nextNode = NULL;
+		puts("right before while of printlist");
 		while(curNode != NULL)
 		{
+			puts("beginning of while");
 			nextNode = curNode->next;
 			printf("%s%s", curNode->user->name,
 				   (nextNode != NULL) ? " " : "");
 			curNode = nextNode;
+			puts("end of while");
 		}
 	}
 }

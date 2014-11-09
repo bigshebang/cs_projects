@@ -150,9 +150,13 @@ void traverse(const TreeNode *root)
 	if(root != NULL)
 	{
 		traverse(root->left);
+		fflush(stdout);
 		printf("\nUser: %s; Friends: ", root->user->name);
+		fflush(stdout);
 		printList(root->user->amigos);
+		fflush(stdout);
 		traverse(root->right);
+		fflush(stdout);
 	}
 }
 
