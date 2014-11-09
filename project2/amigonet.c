@@ -59,11 +59,8 @@ User *findUser(const char *name)
  */
 void addAmigo(User *user, User *amigo)
 {
-	puts("in add amigo");
 	addNode(user, amigo);
-	printf("after first add of %s to %s\n", amigo->name, user->name);
 	addNode(amigo, user);
-	printf("after second add of %s to %s\n", user->name, amigo->name);
 }
 
 /*  Function: removeAmigo
@@ -73,11 +70,8 @@ void addAmigo(User *user, User *amigo)
  */
 void removeAmigo(User *user, User *ex_amigo)
 {
-	puts("in remove amigo");
 	removeNode(user, ex_amigo);
-	puts("after first remove");
 	removeNode(ex_amigo, user);
-	puts("after second remove");
 }
 
 /*  Function: separation
