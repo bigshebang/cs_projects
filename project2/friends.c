@@ -26,6 +26,7 @@ void addNode(User *user, User *amigo)
 
 	if(user->amigos == NULL) //if user has no friends yet create new list
 	{
+		puts("this user has no friends yet. creating list...");
 		//malloc friends list and make sure not null
 		user->amigos = (FriendStruct*)malloc(sizeof(FriendStruct));
 		if(user->amigos == NULL)
@@ -48,6 +49,7 @@ void addNode(User *user, User *amigo)
 	}
 	else //if user already has friends, add to end of list
 	{
+		puts("user already has friends, adding to end...");
 		//create new node and add data to it. make sure it's not null too
 		nodePtr newNode = (nodePtr)malloc(sizeof(node));
 		if(newNode == NULL) //if new node is null, print error and return
