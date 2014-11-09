@@ -103,10 +103,9 @@ void removeNode(User *user, User *exAmigo)
 
 		if(ret == 0) //if it's a match, remove
 		{
-			nodePtr temp1 = nextNode;
-			nodePtr temp2 = nextNode->next;
-			*nextNode = *(temp2);
-			free(temp2);
+			nodePtr temp = nextNode->next;
+			*nextNode = *(temp);
+			free(temp);
 			// if(curNode == nextNode) //if first node
 			// {
 			// 	puts("first node");
