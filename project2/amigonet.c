@@ -61,9 +61,9 @@ void addAmigo(User *user, User *amigo)
 {
 	puts("in add amigo");
 	addNode(user, amigo);
-	puts("after first add of %s to %s", amigo->name, user->name);
+	printf("after first add of %s to %s\n", amigo->name, user->name);
 	addNode(amigo, user);
-	puts("after second add of %s to %s", user->name, amigo->name);
+	printf("after second add of %s to %s\n", user->name, amigo->name);
 }
 
 /*  Function: removeAmigo
