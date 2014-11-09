@@ -5,12 +5,6 @@
  */
 
 #include <stdlib.h>
-
-// DO THIS with real stuffz
-typedef struct Friends_struct {
-	int temp;
-} FriendStruct;
-
 #include "amigonet.h"
 #include "bst.h"
 
@@ -63,17 +57,19 @@ User *findUser(const char *name)
  */
 void addAmigo(User *user, User *amigo)
 {
-	//code
+	addNode(user, amigo);
+	addNode(amigo, user);
 }
 
 /*  Function: removeAmigo
- *  Parameters: cmp - pointer to a function that returns an int and takes two
- *  Purpose: Take in an ordering function and create a queue ADT.
+ *  Parameters: user - pointer to a function that returns an int and takes two
+ *  Purpose: Remove a node/friend from one given list via a specific user.
  *  Returns: Nothing.
  */
 void removeAmigo(User *user, User *ex_amigo)
 {
-	//code
+	removeNode(user, amigo);
+	removeNode(amigo, user);
 }
 
 /*  Function: separation
@@ -84,7 +80,7 @@ void removeAmigo(User *user, User *ex_amigo)
  */
 size_t separation(const User *user1, const User *user2)
 {
-	//code
+	return 0;
 }
 
 /*  Function: dump_data
@@ -94,5 +90,6 @@ size_t separation(const User *user1, const User *user2)
  */
 void dump_data()
 {
-	//code
+	putchar('\n'); //put initial blank line
+	traversal(users);
 }
