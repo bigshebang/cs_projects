@@ -1,4 +1,5 @@
 /*	ljm3103 - Luke Matarazzo
+ *  CSCI-243 -- Project 2 - Amigonet
  *	filename: bst.c
  *	Create a binary search tree (bst) which will contain the users on the
  *	amigonet.
@@ -9,33 +10,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "bst.h"
-
-//prototypes
-int strToInt(char[]);	//convert ascii to int
-
-//define return values
-#define EXIT_SUCCESS	0
-#define WRONG_NUM_ARGS	-1
-#define NEGATIVE_NUM	-2
-
-/*	Function: strToInt
- *	Parameters: str - array of characters that needs to be converted.
- *	Purpose: Take in a C string assuming that it is or contains integer values,
- *	and convert it to an integer.
- *	Returns: An int which is the converted value from the C string.
- */
-int strToInt(char str[])
-{
-	int ret = 0;
-	for(unsigned int i = 0; i < strlen(str); i++)
-	{
-		if(isdigit(str[i]))
-			ret = ret * 10 + str[i] - '0';
-		else
-		    break;
-	}
-	return ret;
-}
 
 /*	Function: build_tree
  *	Parameters: root - pointer to a TreeNode pointer
@@ -170,8 +144,8 @@ void cleanupTree(TreeNode* root)
 		cleanupTree(root->left);
 		cleanupTree(root->right);
 		free((void*)root->user->name);
-		free(root->user);
 		listDestroy(root->user->amigos);
+		free(root->user);
 		free(root);
 	}
 }

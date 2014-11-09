@@ -1,7 +1,9 @@
 /*  ljm3103 - Luke Matarazzo
  *  CSCI-243 -- Project 2 - Amigonet
  *  filename: amigonet.c
- *  File containing TO DO: complete this
+ *  File containing the amigonet API which can create/destroy an amigonet
+ *	add and find users, friend and unfriend users, find degrees of seperation
+ *	between users, and dump all data about users and their friends.
  */
 
 #include <stdlib.h>
@@ -14,7 +16,8 @@ static TreeNode *users;	//pointer to our users
 
 /*  Function: create_amigonet
  *  Parameters: None.
- *  Purpose: Take in an ordering function and create a queue ADT.
+ *  Purpose: Initialize users treenode to NULL. Memory will be allocated
+ *	when actually adding users to the tree.
  *  Returns: Nothing.
  */
 void create_amigonet()
@@ -23,9 +26,9 @@ void create_amigonet()
 }
 
 /*  Function: destroy_amigonet
- *  Parameters: cmp - pointer to a function that returns an int and takes two
- *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
+ *  Parameters: None.
+ *  Purpose: Free all memory allocated for users and their friends list.
+ *  Returns: Nothing.
  */
 void destroy_amigonet()
 {
@@ -53,8 +56,9 @@ User *findUser(const char *name)
 }
 
 /*  Function: addAmigo
- *  Parameters: cmp - pointer to a function that returns an int and takes two
- *  Purpose: Take in an ordering function and create a queue ADT.
+ *  Parameters: user - one user to add to friend list
+ *				amigo - second user to add to list
+ *  Purpose: Add two users to each other's friends list.
  *  Returns: Nothing.
  */
 void addAmigo(User *user, User *amigo)
@@ -64,8 +68,9 @@ void addAmigo(User *user, User *amigo)
 }
 
 /*  Function: removeAmigo
- *  Parameters: user - pointer to a function that returns an int and takes two
- *  Purpose: Remove a node/friend from one given list via a specific user.
+ *  Parameters: user - first user of removal
+ *				ex_amigo - second user of removal
+ *  Purpose: Remove two friends from each other's friends list.
  *  Returns: Nothing.
  */
 void removeAmigo(User *user, User *ex_amigo)
@@ -75,20 +80,24 @@ void removeAmigo(User *user, User *ex_amigo)
 }
 
 /*  Function: separation
- *  Parameters: user1 - ...
- *				user2 - ...
- *  Purpose: ...
+ *  Parameters: user1 - first user who has the friends list to search
+ *				user2 - second user to find in the list
+ *  Purpose: Determine degrees of separation between two users based upon
+ *	their friends lists.
  *  Returns: size_t which is the number of degrees of separation between
  *	the two users.
  */
 size_t separation(const User *user1, const User *user2)
 {
-	return 0;
+	if(user1 == user2)
+		return 0;
+	else
+		return -1;
 }
 
 /*  Function: dump_data
  *  Parameters: None.
- *  Purpose: 
+ *  Purpose: Print all users in database and all their friends.
  *  Returns: Nothing.
  */
 void dump_data()

@@ -1,8 +1,8 @@
-// File: $Id: bst.h,v 1.3 2014/02/27 20:46:28 csci243 Exp $
-//
-// Binary Search Tree definitions
-//
-// Author: rwd, sps
+/*	ljm3103 - Luke Matarazzo
+ *  CSCI-243 -- Project 2 - Amigonet
+ *	filename: bst.h
+ *	bst header file.
+ */
 
 #ifndef BST_H
 #define BST_H
