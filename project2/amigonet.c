@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "amigonet.h"
 #include "bst.h"
+#include "friends.h"
 
 static TreeNode *users;	//pointer to our users
 
