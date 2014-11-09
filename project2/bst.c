@@ -48,15 +48,30 @@ void buildTree(TreeNode** root, const char* name)
 {
 	//create and initialize tree node
 	TreeNode *temp = (TreeNode*)malloc(sizeof(TreeNode));
+	if(temp == NULL)
+	{
+		fprintf(stderr, "Could not allocate space for user.\n");
+		return;
+	}
 	temp->left = NULL;
 	temp->right = NULL;
 
 	//create and initialize user
 	temp->user = (User*)malloc(sizeof(User));
+	if(temp->user == NULL)
+	{
+		fprintf(stderr, "Could not allocate space for user.\n");
+		return;
+	}
 	temp->user->amigos = NULL;
 
 	//handle adding name
 	temp->user->name = (char*)malloc(sizeof(name));
+	if(temp->user->name == NULL)
+	{
+		fprintf(stderr, "Could not allocate space for user's name.\n");
+		return;
+	}
 	char *tempStr = temp->user->name;
 	strcpy(tempStr, name);
 	tempStr = NULL;
