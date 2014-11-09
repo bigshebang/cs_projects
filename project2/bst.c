@@ -18,63 +18,6 @@ int strToInt(char[]);	//convert ascii to int
 #define WRONG_NUM_ARGS	-1
 #define NEGATIVE_NUM	-2
 
-// int main(int argc, char *argv[])
-// {
-// 	// if(argc < 2) //if arg not given, print error and exit
-// 	// {
-// 	// 	puts("Usage: bst #");
-// 	// 	return WRONG_NUM_ARGS;
-// 	// }
-	
-// 	// int size = strToInt(argv[1]);
-	
-// 	// if(size <= 0) //if num given is less than 0, print error and exit
-// 	// {
-// 	// 	puts("# must be greater than 0");
-// 	// 	return NEGATIVE_NUM;
-// 	// }
-
-// 	// int nums[size]; //array to hold expected numbers from stdin
-// 	char *nums[] = {"John", "Carl", "Andrew", "Zeaque", "Kim"};
-// 	int size = 5;
-
-// 	// printf("Enter %d integer values to place in tree:\n", size);
-
-// 	// for(int i = 0; i < size; i++) //read ints int
-// 	// 	scanf("%d", nums+i);
-
-// 	//print heading and then given values
-// 	puts("Input values:");
-// 	for(int i = 0; i < size; i++)
-// 		printf("%s\n", nums[i]);
-
-// 	//create root treenode and build tree from given numbers
-// 	TreeNode *tn = NULL;
-// 	// build_tree(&tn, nums);
-// 	for(int i = 0; i < size; i++)
-// 		buildTree(&tn, nums[i]);
-
-// 	// //print preordered
-// 	// puts("Preorder:");
-// 	// traverse(tn, PREORDER);
-
-// 	//print inorder
-// 	puts("Inorder:");
-// 	traverse(tn);
-
-// 	User *tempUser = locateUser(tn, "Andrew");
-// 	if(tempUser != NULL)
-// 		printf("user found was: '%s'\n", tempUser->name);
-
-// 	// //print postorder
-// 	// puts("Postorder:");
-// 	// traverse(tn, POSTORDER);
-
-// 	cleanupTree(tn); //free memory that was allocated to create bst
-
-// 	return EXIT_SUCCESS;
-// }
-
 /*	Function: strToInt
  *	Parameters: str - array of characters that needs to be converted.
  *	Purpose: Take in a C string assuming that it is or contains integer values,
@@ -213,6 +156,7 @@ void cleanupTree(TreeNode* root)
 		cleanupTree(root->right);
 		free((void*)root->user->name);
 		free(root->user);
+		listDestroy(root->user->amigos);
 		free(root);
 	}
 }
