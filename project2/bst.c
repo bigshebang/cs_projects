@@ -96,8 +96,9 @@ int strToInt(char str[])
 
 /*	Function: build_tree
  *	Parameters: root - pointer to a TreeNode pointer
-				name - 
- *	Purpose: 
+				name - name of user to add to tree
+ *	Purpose: Create binary search tree or insert node into tree if it already
+ *	existed.
  *	Returns: Nothing.
  */
 void buildTree(TreeNode** root, const char* name)
@@ -154,10 +155,10 @@ void buildTree(TreeNode** root, const char* name)
 	}
 }
 
-/*  Function: traverse
- *  Parameters: root - Pointer to a TreeNode which is the root of the bst
-				name - 
- *  Purpose: 
+/*  Function: locateUser
+ *  Parameters: root - Pointer to a TreeNode which is the root of the bst.
+				name - Name of user that you want to find.
+ *  Purpose: Find a user specified by the name and return that node.
  *  Returns: Nothing.
  */
 User *locateUser(const TreeNode *root, const char* name)
@@ -176,49 +177,8 @@ User *locateUser(const TreeNode *root, const char* name)
 	return NULL; //return null if treenode given was null
 }
 
-/*  Function: traverse
- *  Parameters: root - Pointer to a TreeNode which is the root of the bst
-				type - type of traversal defined in bst.h:18-22
- *  Purpose: Traverse a given bst as defined by the given type of traversal and
-	print out the values of each node as we process them.
- *  Returns: Nothing.
- */
-// void traverse(const TreeNode *root, const TraversalType type)
-// {
-// 	switch(type)
-// 	{
-// 		case PREORDER: //print data member, traverse left and right recursively
-// 			if(root != NULL)
-// 			{
-// 				printf("%s\n", root->user->name);
-// 				traverse(root->left, PREORDER);
-// 				traverse(root->right, PREORDER);
-// 			}
-// 			break;
-// 		case INORDER: //traverse left, print data member then traverse right
-// 			if(root != NULL)
-// 			{
-// 				traverse(root->left, INORDER);
-// 				printf("%s\n", root->user->name);
-// 				traverse(root->right, INORDER);
-// 			}
-// 			break;
-// 		case POSTORDER: //traverse left, then right, then print data member
-// 			if(root != NULL)
-// 			{
-// 				traverse(root->left, POSTORDER);
-// 				traverse(root->right, POSTORDER);
-// 				printf("%s\n", root->user->name);
-// 			}
-// 			break;
-// 		default:
-// 			puts("You did not give a recognized type of traversal.");
-// 			break;
-// 	}
-// }
-
 /*  Function: cleanup_tree
- *  Parameters: root - TreeNode pointer that is the root of a bst
+ *  Parameters: root - TreeNode pointer that is the root of a bst.
  *  Purpose: Deallocate the dynamically allocated memory from the build_tree
 	function.
  *  Returns: Nothing.
