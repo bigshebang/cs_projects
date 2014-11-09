@@ -88,7 +88,6 @@ void removeNode(User *user, User *exAmigo)
 	//if neither user is null and they're not the same user
 	if(user != exAmigo && user != NULL && exAmigo != NULL)
 	{
-		puts("inside if");
 		nodePtr curNode = user->amigos->firstFriend;
 		nodePtr nextNode = curNode;
 		int ret = -1;
@@ -103,30 +102,10 @@ void removeNode(User *user, User *exAmigo)
 
 		if(ret == 0) //if it's a match, remove
 		{
-			// nodePtr temp = nextNode->next;
-			// if(temp != NULL)
-			// {
-			// 	nextNode->next = temp->next;
-			// 	nextNode->user->amigos = temp->user->amigos;
-			// 	free(nextNode->user->name);
-			// 	// nextNode->user->name = (char*)malloc(sizeof(temp->user->name));
-			// 	nextNode->user->name = temp->user->name;
-			// 	// *nextNode = *(temp);
-			// 	free(temp);
-			// }
-			// else
-			// 	free(nextNode);
-
 			if(curNode == nextNode) //if first node
-			{
-				puts("first node");
 				user->amigos->firstFriend = nextNode->next;
-			}
 			else //if not first node
-			{
-				puts("not first node");
 				curNode->next = nextNode->next;
-			}
 			free(nextNode);
 		}
 	}

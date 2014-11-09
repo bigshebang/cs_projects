@@ -98,9 +98,6 @@ size_t separation(const User *user1, const User *user2)
  */
 void dump_data()
 {
-	puts("in dump data");
-	putchar('\n'); //put initial blank line
 	traverse(users);
 	putchar('\n'); //put last blank line
-	puts("after dump data");
 }
