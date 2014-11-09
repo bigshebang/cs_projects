@@ -68,8 +68,8 @@ void addAmigo(User *user, User *amigo)
  */
 void removeAmigo(User *user, User *ex_amigo)
 {
-	removeNode(user, amigo);
-	removeNode(amigo, user);
+	removeNode(user, ex_amigo);
+	removeNode(ex_amigo, user);
 }
 
 /*  Function: separation
@@ -92,4 +92,5 @@ void dump_data()
 {
 	putchar('\n'); //put initial blank line
 	traversal(users);
+	putchar('\n'); //put last blank line
 }
