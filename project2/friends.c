@@ -20,7 +20,7 @@ void addNode(User *user, User *amigo)
 {
 	if(user == NULL || amigo == NULL) //if user is null, print error and return
 	{
-		fprintf(stderr, "User given is null.");
+		fprintf(stderr, "User given is null.\n");
 		return;
 	}
 
@@ -30,7 +30,7 @@ void addNode(User *user, User *amigo)
 		user->amigos = (FriendStruct*)malloc(sizeof(FriendStruct));
 		if(user->amigos == NULL)
 		{
-			fprintf(stderr, "Could not allocate memory for friends list.");
+			fprintf(stderr, "Could not allocate memory for friends list.\n");
 			return;
 		}
 
@@ -38,7 +38,7 @@ void addNode(User *user, User *amigo)
 		user->amigos->firstFriend = (nodePtr)malloc(sizeof(node));
 		if(user->amigos->firstFriend == NULL)
 		{
-			fprintf(stderr, "Could not allocate memory for friends list.");
+			fprintf(stderr, "Could not allocate memory for friends list.\n");
 			return;
 		}
 
@@ -52,7 +52,7 @@ void addNode(User *user, User *amigo)
 		nodePtr newNode = (nodePtr)malloc(sizeof(node));
 		if(newNode == NULL) //if new node is null, print error and return
 		{
-			fprintf(stderr, "Could not allocate memory for friends list.");
+			fprintf(stderr, "Could not allocate memory for friends list.\n");
 			return;
 		}
 
@@ -151,161 +151,3 @@ void listDestroy(FriendStruct *friends)
 		free(friends);
 	}
 }
-
-/*  Function: que_create
- *  Parameters: cmp - pointer to a function that returns an int and takes two
- 					  void pointers
- *  Purpose: Take in an ordering function and create a queue ADT.
- *  Returns: QueueADT, a pointer to a queueStruct.
- */
-// QueueADT que_create(int (*cmp)(const void*a, const void*b))
-// {
-// 	//allocate space for new queue item and make sure it isn't NULL
-// 	QueueADT newQueue = (QueueADT)malloc(sizeof(struct queueStruct));
-// 	assert(newQueue != NULL);
-
-// 	//initialize values
-// 	newQueue->myNode = NULL;
-// 	newQueue->func = cmp;
-
-// 	return newQueue;
-// }
-
-/*  Function: que_destroy
- *  Parameters: queue - A QueueADT which may or may not have values in it.
- *  Purpose: Free the memory allocated for the given queue.
- *  Returns: Nothing.
- */
-// void que_destroy(QueueADT queue)
-// {
-// 	assert(queue != NULL);
-
-// 	nodePtr curNode = queue->myNode;
-// 	nodePtr nextNode = NULL;
-// 	if(curNode != NULL)
-// 	{
-// 		nextNode = curNode->next;
-// 		free(curNode);
-// 		curNode = nextNode;
-// 	}
-
-// 	free(queue);
-// }
-
-/*  Function: que_clear
- *  Parameters: queue - QueueADT which may or may not be empty
- *  Purpose: Empty the given queue and reset all values to NULL or 0.
- *  Returns: Nothing.
- */
-// void que_clear(QueueADT queue)
-// {
-// 	assert(queue != NULL);
-
-// 	nodePtr curNode = queue->myNode;
-// 	nodePtr nextNode = NULL;
-// 	if(curNode != NULL)
-// 	{
-// 		nextNode = curNode->next;
-// 		free(curNode);
-// 		curNode = nextNode;
-// 	}
-// 	queue->myNode = NULL;
-// }
-
-/*  Function: que_insert
- *  Parameters: queue - QueueADT object to insert the given data into
- 				data - void pointer to the data we should add to the queue
- *  Purpose: Insert a given piece of data into the given queue in an ordered
- *	fashion.
- *  Returns: Nothing.
- */
-// void que_insert(QueueADT queue, void *data)
-// {
-// 	assert(queue != NULL);
-
-// 	//create new node and add data to it. make sure it's not null too
-// 	nodePtr newNode = (nodePtr)malloc(sizeof(struct node));
-// 	assert(newNode != NULL);
-// 	newNode->contents = data;
-// 	newNode->next = NULL;
-
-// 	//node pointers used by both if/else clauses
-// 	nodePtr curNode = queue->myNode;
-// 	nodePtr nextNode = curNode;
-
-// 	//handle insertion
-// 	if(curNode == NULL) //if no elements yet
-// 		queue->myNode = newNode;
-// 	else if(queue->func == NULL) //if no ordering function given
-// 	{		
-// 		while(nextNode != NULL)
-// 		{
-// 			curNode = nextNode;
-// 			nextNode = curNode->next;
-// 		}
-
-// 		//add new node to end of queue/linked list
-// 		curNode->next = newNode;
-// 	}
-// 	else //if ordering function given
-// 	{
-// 		nodePtr prevNode = NULL;
-// 		int ret = -1;
-
-// 		while(curNode != NULL
-// 			  && (ret = (queue->func)(curNode->contents, data)) <= 0
-// 			  && nextNode != NULL)
-// 		{
-// 			prevNode = curNode;
-// 			curNode = nextNode;
-// 			nextNode = curNode->next;
-// 		}
-
-// 		if(prevNode == NULL) //first element inserted higher than others
-// 		{
-// 			queue->myNode = newNode;
-// 			newNode->next = curNode;
-// 		}
-// 		else if(nextNode == NULL && ret <= 0) //if last element
-// 		{
-// 			curNode->next = newNode;
-// 		}
-// 		else //if in the middle
-// 		{
-// 			newNode->next = curNode;
-// 			prevNode->next = newNode;
-// 		}
-// 	}
-// }
-
-/*  Function: que_remove
- *  Parameters: queue - QueueADT object to remove the item from.
- *  Purpose: Remove and return the first (oldest) item in the queue.
- *  Returns: void pointer to the item just removed from the given queue
- */
-// void *que_remove(QueueADT queue)
-// {
-// 	assert(queue != NULL);
-
-// 	//get and replace first element, free old element and return data
-// 	if(queue->myNode != NULL)
-// 	{
-// 		nodePtr tempNode = queue->myNode;
-// 		queue->myNode = tempNode->next;
-// 		void *tempData = tempNode->contents;
-// 		free(tempNode);
-// 		return tempData;
-// 	}
-
-// 	return NULL; //return null in case we never get inside if statement
-// }
-
-/*  Function: que_empty
- *  Parameters: queue - the QueueADT object to be checked.
- *  Purpose: Determine if the given queue is empty or not.
- *  Returns: boolean of true if queue is empty and false if not
- */
-// bool que_empty(QueueADT queue)
-// {
-// 	return(queue->myNode == NULL);
-// }
