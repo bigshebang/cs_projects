@@ -102,5 +102,5 @@ void dump_data()
 	putchar('\n'); //put initial blank line
 	traverse(users);
 	putchar('\n'); //put last blank line
-	puts("after dump data")
+	puts("after dump data");
 }
