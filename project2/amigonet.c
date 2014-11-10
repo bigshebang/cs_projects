@@ -119,6 +119,7 @@ size_t separation(const User *user1, const User *user2)
 		printf("%d ", i);
 		return dls(user1, user2, i);
 	}
+	return -1;
 	// if(strcmp(user1->name, user2->name) == 0)
 	// 	return 0;
 	// else
