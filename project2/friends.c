@@ -9,6 +9,10 @@
 #include <string.h>
 #include "friends.h"
 
+#define FUNC_SUCCESS	1
+#define FUNC_FAILURE	0
+#define NULL_POINTER	-1
+
 /*  Function: addNode
  *  Parameters: user - user who has friends list we're adding to
  *				amigo - friend to add to the linked/friends list
@@ -20,7 +24,7 @@ int addNode(User *user, User *amigo)
 	if(user == NULL || amigo == NULL) //if user is null, print error and return
 	{
 		fprintf(stderr, "User given is null.\n");
-		return;
+		return NULL_POINTER; //return true value, but indicate failure
 	}
 
 	if(user->amigos == NULL) //if user has no friends yet create new list
@@ -30,7 +34,7 @@ int addNode(User *user, User *amigo)
 		if(user->amigos == NULL)
 		{
 			fprintf(stderr, "Could not allocate memory for friends list.\n");
-			return;
+			return NULL_POINTER;
 		}
 
 		//malloc a new node ane make sure not null
@@ -38,7 +42,7 @@ int addNode(User *user, User *amigo)
 		if(user->amigos->firstFriend == NULL)
 		{
 			fprintf(stderr, "Could not allocate memory for friends list.\n");
-			return;
+			return NULL_POINTER;
 		}
 
 		//initialize data in node
@@ -52,7 +56,7 @@ int addNode(User *user, User *amigo)
 		if(newNode == NULL) //if new node is null, print error and return
 		{
 			fprintf(stderr, "Could not allocate memory for friends list.\n");
-			return;
+			return NULL_POINTER;
 		}
 
 		//initialize data in new node
@@ -67,7 +71,7 @@ int addNode(User *user, User *amigo)
 		{
 			//make sure they aren't already a friend. return 0 for failure
 			if(strcmp(amigo->name, curNode->user->name) == 0)
-				return 0;
+				return FUNC_FAILURE;
 
 			curNode = nextNode;
 			nextNode = curNode->next;
@@ -76,7 +80,7 @@ int addNode(User *user, User *amigo)
 		//add new node to end of linked list
 		curNode->next = newNode;
 	}
-	return 1; //return 1 by default if nothing else was returned
+	return FUNC_SUCCESS; //return 1 by default if nothing else was returned
 }
 
 /*  Function: removeNode
@@ -109,13 +113,13 @@ int removeNode(User *user, User *exAmigo)
 			else //if not first node
 				curNode->next = nextNode->next;
 			free(nextNode);
-			return 1; //return success
+			return FUNC_SUCCESS; //return success
 		}
 		else //return failure if no match found so we don't try again
-			return 0;
+			return FUNC_FAILURE;
 	}
 	else //return failure if amigos are the same or don't exist
-		return 0;
+		return FUNC_FAILURE;
 }
 
 /*  Function: printList
