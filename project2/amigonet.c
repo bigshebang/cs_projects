@@ -90,24 +90,27 @@ void removeAmigo(User *user, User *ex_amigo)
  *  Returns: size_t which is the number of degrees of separation between
  *	the two users.
  */
-size_t dls(const User *user1, const User *user2, int max)
+int dls(const User *user1, const User *user2, int max)
 {
 	if(max >= 0)
 	{
 		if(strcmp(user1->name, user2->name) == 0) //if it's what we want
-			return max;
+			return 1;
 
-		//for each child in node
-		nodePtr curNode = user1->amigos->firstFriend;
-		nodePtr nextNode = curNode;
-		while(curNode != NULL)
+		//for each child in node, call dls on it with max being one less
+		if(user1->amigos != NULL) //make sure amigos is not null
 		{
-			curNode = nextNode;
-			nextNode = curNode->next;
-			return dls(curNode->user, user2, max-1);
+			nodePtr curNode = user1->amigos->firstFriend;
+			nodePtr nextNode = curNode;
+			while(curNode != NULL)
+			{
+				curNode = nextNode;
+				nextNode = curNode->next;
+				return dls(curNode->user, user2, max-1);
+			}
 		}
 	}
-	return -1;
+	return 0;
 }
 
 /*  Function: separation
@@ -121,9 +124,12 @@ size_t dls(const User *user1, const User *user2, int max)
  */
 size_t separation(const User *user1, const User *user2)
 {
+	int ret = -1;
 	for(int i = 1; i < 50; i++)
-		return dls(user1, user2, i);
-
+	{
+		if(dls(user1, user2, i))
+			return i - 1;
+	}
 	return -1;
 }
 
