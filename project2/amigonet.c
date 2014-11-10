@@ -9,9 +9,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "amigonet.h"
 #include "bst.h"
-#include "friends.h"
+
+#define MAX_DEPTH		1000	//max search depth for separation
+#define USER_FOUND		1		//return value for when we found the user
+#define USER_NOT_FOUND	0		//for when we haven't found the user
 
 static TreeNode *users;	//pointer to our users
 
@@ -64,8 +66,7 @@ User *findUser(const char *name)
  */
 void addAmigo(User *user, User *amigo)
 {
-	int ret = addNode(user, amigo);
-	if(ret) //if successful, add amigo the other way around
+	if(addNode(user, amigo)) //if successful, add amigo the other way around
 		addNode(amigo, user);
 }
 
@@ -77,8 +78,7 @@ void addAmigo(User *user, User *amigo)
  */
 void removeAmigo(User *user, User *ex_amigo)
 {
-	int ret = removeNode(user, ex_amigo);
-	if(ret) //if successful, remove the other way around
+	if(removeNode(user, ex_amigo)) //if successful, remove the other way around
 		removeNode(ex_amigo, user);
 }
 
@@ -87,34 +87,33 @@ void removeAmigo(User *user, User *ex_amigo)
  *				user2 - second user to find in the list
  *				max - int which is the max depth
  *  Purpose: Perform a depth limited search based on the given max value.
- *  Returns: size_t which is the number of degrees of separation between
- *	the two users.
+ *  Returns: int, which is 1 if we find what we want and 0 if we don't.
  */
 int dls(const User *user1, const User *user2, int max)
 {
-	if(max > 0)
+	if(max >= 0) //if we haven't exceeded max depth, keep doing
 	{
 		if(strcmp(user1->name, user2->name) == 0) //if it's what we want
-			return 1;
+			return USER_FOUND;
 
 		//for each child in node, call dls on it with max being one less
 		if(user1->amigos != NULL) //make sure amigos is not null
 		{
 			nodePtr curNode = user1->amigos->firstFriend;
 			nodePtr nextNode = curNode;
-			while(curNode != NULL)
+			while(curNode != NULL && nextNode != NULL) //loop through friends
 			{
 				curNode = nextNode;
 				nextNode = curNode->next;
 
 				//if any returns true, return true
 				if(dls(curNode->user, user2, max-1))
-					return 1;
+					return USER_FOUND;
 			}
 		}
-		return 0; //return default of false
+		return USER_NOT_FOUND; //return default of false
 	}
-	return 0; //return default of false
+	return USER_NOT_FOUND; //return default of false
 }
 
 /*  Function: separation
@@ -128,10 +127,10 @@ int dls(const User *user1, const User *user2, int max)
  */
 size_t separation(const User *user1, const User *user2)
 {
-	for(int i = 1; i < 50; i++)
+	for(int i = 0; i < MAX_DEPTH; i++)
 	{
 		if(dls(user1, user2, i))
-			return i - 1;
+			return i;
 	}
 	return -1;
 }
