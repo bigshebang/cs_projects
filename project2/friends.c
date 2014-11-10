@@ -77,6 +77,10 @@ int addNode(User *user, User *amigo)
 			nextNode = curNode->next;
 		}
 
+		//check again because last node skips the while loop
+		if(strcmp(amigo->name, curNode->user->name) == 0)
+			return FUNC_FAILURE;
+
 		//add new node to end of linked list
 		curNode->next = newNode;
 	}
