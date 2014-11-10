@@ -11,7 +11,7 @@
 #include <string.h>
 #include "bst.h"
 
-#define MAX_DEPTH		1000	//max search depth for separation
+#define MAX_DEPTH		50		//max search depth for separation
 #define USER_FOUND		1		//return value for when we found the user
 #define USER_NOT_FOUND	0		//for when we haven't found the user
 
