@@ -89,7 +89,7 @@ void removeAmigo(User *user, User *ex_amigo)
  */
 size_t separation(const User *user1, const User *user2)
 {
-	if(user1 == user2)
+	if(strcmp(user1->name, user2->name) == 0)
 		return 0;
 	else
 		return -1;
