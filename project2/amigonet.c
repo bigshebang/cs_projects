@@ -124,7 +124,6 @@ int dls(const User *user1, const User *user2, int max)
  */
 size_t separation(const User *user1, const User *user2)
 {
-	int ret = -1;
 	for(int i = 1; i < 50; i++)
 	{
 		if(dls(user1, user2, i))
