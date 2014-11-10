@@ -124,7 +124,7 @@ void traverse(const TreeNode *root)
 	if(root != NULL)
 	{
 		traverse(root->left);
-		printf("\nUser: %s; Friends: ", root->user->name);
+		printf("\nUser: %s; friends: ", root->user->name);
 		printList(root->user->amigos);
 		traverse(root->right);
 	}
