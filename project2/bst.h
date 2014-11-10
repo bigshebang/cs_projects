@@ -6,7 +6,6 @@
 
 #ifndef BST_H
 #define BST_H
-#include "amigonet.h"
 #include "friends.h"
 
 //The definition of the tree structure
