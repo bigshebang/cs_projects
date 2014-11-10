@@ -13,9 +13,9 @@
  *  Parameters: user - user who has friends list we're adding to
  *				amigo - friend to add to the linked/friends list
  *  Purpose: Add a given user to another user's friend list.
- *  Returns: Nothing.
+ *  Returns: An int which is the return status of the function.
  */
-void addNode(User *user, User *amigo)
+int addNode(User *user, User *amigo)
 {
 	if(user == NULL || amigo == NULL) //if user is null, print error and return
 	{
@@ -65,9 +65,9 @@ void addNode(User *user, User *amigo)
 
 		while(nextNode != NULL) //iterate through list
 		{
-			//make sure they aren't already a friend
+			//make sure they aren't already a friend. return 0 for failure
 			if(strcmp(amigo->name, curNode->user->name) == 0)
-				return;
+				return 0;
 
 			curNode = nextNode;
 			nextNode = curNode->next;
@@ -76,15 +76,16 @@ void addNode(User *user, User *amigo)
 		//add new node to end of linked list
 		curNode->next = newNode;
 	}
+	return 1; //return 1 by default if nothing else was returned
 }
 
 /*  Function: removeNode
  *  Parameters: user - User who has friends list
  				exAmigo - User to remove from the friends list
  *  Purpose: Remove a node/friend from one given list via a specific user.
- *  Returns: Nothing.
+ *  Returns: An int which is the return status of the function.
  */
-void removeNode(User *user, User *exAmigo)
+int removeNode(User *user, User *exAmigo)
 {
 	//if neither user is null and they're not the same user
 	if(user != exAmigo && user != NULL && exAmigo != NULL)
@@ -108,8 +109,13 @@ void removeNode(User *user, User *exAmigo)
 			else //if not first node
 				curNode->next = nextNode->next;
 			free(nextNode);
+			return 1; //return success
 		}
+		else //return failure if no match found so we don't try again
+			return 0;
 	}
+	else //return failure if amigos are the same or don't exist
+		return 0;
 }
 
 /*  Function: printList

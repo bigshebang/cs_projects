@@ -21,9 +21,9 @@ typedef struct Friends_struct //friends list struct
 } FriendStruct;
 
 //functions
-void addNode(User *user, User *amigo); //add a node to another's list
-void removeNode(User *user, User *exAmigo); //remove a node from another's list
-void printList(FriendStruct *friends); //print a given list
-void listDestroy(FriendStruct *friends); //deallocate memory for a given list
+int addNode(User *user, User *amigo); 		//add a node to another's list
+int removeNode(User *user, User *exAmigo); 	//remove a node from another's list
+void printList(FriendStruct *friends); 		//print a given list
+void listDestroy(FriendStruct *friends); 	//deallocate memory for a given list
 
 #endif
