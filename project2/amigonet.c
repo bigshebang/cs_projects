@@ -82,14 +82,20 @@ void removeAmigo(User *user, User *ex_amigo)
 		removeNode(ex_amigo, user);
 }
 
+/*  Function: dls
+ *  Parameters: user1 - first user who has the friends list to search
+ *				user2 - second user to find in the list
+ *				max - int which is the max depth
+ *  Purpose: Perform a depth limited search based on the given max value.
+ *  Returns: size_t which is the number of degrees of separation between
+ *	the two users.
+ */
 size_t dls(const User *user1, const User *user2, int max)
 {
 	if(max >= 0)
 	{
 		if(strcmp(user1->name, user2->name) == 0) //if it's what we want
-		{
 			return max;
-		}
 
 		//for each child in node
 		nodePtr curNode = user1->amigos->firstFriend;
@@ -108,22 +114,19 @@ size_t dls(const User *user1, const User *user2, int max)
  *  Parameters: user1 - first user who has the friends list to search
  *				user2 - second user to find in the list
  *  Purpose: Determine degrees of separation between two users based upon
- *	their friends lists.
+ *	their friends lists. Use iterative depth first search which calls a
+ *	recrusive depth limited search function.
  *  Returns: size_t which is the number of degrees of separation between
  *	the two users.
  */
 size_t separation(const User *user1, const User *user2)
 {
-	for(int i = 0; i < 50; i++)
+	for(int i = 1; i < 50; i++)
 	{
 		printf("%d ", i);
 		return dls(user1, user2, i);
 	}
 	return -1;
-	// if(strcmp(user1->name, user2->name) == 0)
-	// 	return 0;
-	// else
-	// 	return -1;
 }
 
 /*  Function: dump_data
