@@ -82,6 +82,27 @@ void removeAmigo(User *user, User *ex_amigo)
 		removeNode(ex_amigo, user);
 }
 
+size_t dls(const User *user1, const User *user2, int max)
+{
+	if(max >= 0)
+	{
+		if(strcmp(user1->name, user2->name) == 0) //if it's what we want
+		{
+			return max;
+		}
+
+		//for each child in node
+		nodePtr curNode = user1->amigos->firstFriend;
+		nodePtr nextNode = curNode;
+		while(curNode != NULL)
+		{
+			curNode = nextNode->user;
+			nextNode = curNode->next;
+			return dls(curNode->user, user2, max-1);
+		}
+	}
+}
+
 /*  Function: separation
  *  Parameters: user1 - first user who has the friends list to search
  *				user2 - second user to find in the list
@@ -92,10 +113,15 @@ void removeAmigo(User *user, User *ex_amigo)
  */
 size_t separation(const User *user1, const User *user2)
 {
-	if(strcmp(user1->name, user2->name) == 0)
-		return 0;
-	else
-		return -1;
+	for(int i = 0; i < 50; i++)
+	{
+		printf("%d ", i);
+		return dls(user1, user2, i);
+	}
+	// if(strcmp(user1->name, user2->name) == 0)
+	// 	return 0;
+	// else
+	// 	return -1;
 }
 
 /*  Function: dump_data
