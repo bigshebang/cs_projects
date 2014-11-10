@@ -106,11 +106,15 @@ int dls(const User *user1, const User *user2, int max)
 			{
 				curNode = nextNode;
 				nextNode = curNode->next;
-				return dls(curNode->user, user2, max-1);
+
+				//if any returns true, return true
+				if(dls(curNode->user, user2, max-1))
+					return 1;
 			}
 		}
+		return 0; //return default of false
 	}
-	return 0;
+	return 0; //return default of false
 }
 
 /*  Function: separation
