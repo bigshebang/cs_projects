@@ -101,6 +101,7 @@ size_t dls(const User *user1, const User *user2, int max)
 			return dls(curNode->user, user2, max-1);
 		}
 	}
+	return -1;
 }
 
 /*  Function: separation
