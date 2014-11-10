@@ -63,8 +63,12 @@ void addNode(User *user, User *amigo)
 		nodePtr curNode = user->amigos->firstFriend;
 		nodePtr nextNode = curNode;
 
-		while(nextNode != NULL) //get to last node in list
+		while(nextNode != NULL) //iterate through list
 		{
+			//make sure they aren't already a friend
+			if(strcmp(amigo->name, curNode->user->name) == 0)
+				return;
+
 			curNode = nextNode;
 			nextNode = curNode->next;
 		}
