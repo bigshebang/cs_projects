@@ -63,8 +63,9 @@ User *findUser(const char *name)
  */
 void addAmigo(User *user, User *amigo)
 {
-	addNode(user, amigo);
-	addNode(amigo, user);
+	int ret = addNode(user, amigo);
+	if(ret) //if successful, add amigo the other way around
+		addNode(amigo, user);
 }
 
 /*  Function: removeAmigo
@@ -75,8 +76,9 @@ void addAmigo(User *user, User *amigo)
  */
 void removeAmigo(User *user, User *ex_amigo)
 {
-	removeNode(user, ex_amigo);
-	removeNode(ex_amigo, user);
+	int ret = removeNode(user, ex_amigo);
+	if(ret) //if successful, remove the other way around
+		removeNode(ex_amigo, user);
 }
 
 /*  Function: separation
