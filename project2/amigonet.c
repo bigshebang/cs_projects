@@ -92,7 +92,7 @@ void removeAmigo(User *user, User *ex_amigo)
  */
 int dls(const User *user1, const User *user2, int max)
 {
-	if(max >= 0)
+	if(max > 0)
 	{
 		if(strcmp(user1->name, user2->name) == 0) //if it's what we want
 			return 1;
