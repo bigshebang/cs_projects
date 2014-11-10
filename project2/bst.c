@@ -11,7 +11,7 @@
 #include <ctype.h>
 #include "bst.h"
 
-/*	Function: build_tree
+/*	Function: buildTree
  *	Parameters: root - pointer to a TreeNode pointer
 				name - name of user to add to tree
  *	Purpose: Create binary search tree or insert node into tree if it already
@@ -49,7 +49,6 @@ void buildTree(TreeNode** root, const char* name)
 	char *tempStr = temp->user->name;
 	strcpy(tempStr, name);
 	tempStr = NULL;
-
 
 	//insert into bst
 	if(*root == NULL) //make root if we don't have one yet
@@ -115,12 +114,13 @@ User *locateUser(const TreeNode *root, const char* name)
 
 /*  Function: traverse
  *  Parameters: root - Pointer to a TreeNode which is the root of the bst
- *  Purpose: Traverse a given bst and print out the values of each node as we
- *	process them.
+ *  Purpose: Traverse a given bst and print the username and their friends list
  *  Returns: Nothing.
  */
 void traverse(const TreeNode *root)
 {
+	//if not null, traverse left node, print info about current node then
+	//traverse the right node. Essentially an in-order traversal.
 	if(root != NULL)
 	{
 		traverse(root->left);
@@ -144,7 +144,7 @@ void cleanupTree(TreeNode* root)
 		cleanupTree(root->left);
 		cleanupTree(root->right);
 		free((void*)root->user->name);
-		listDestroy(root->user->amigos);
+		listDestroy(root->user->amigos); //destroy friends list
 		free(root->user);
 		free(root);
 	}

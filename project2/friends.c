@@ -1,13 +1,12 @@
 /*  ljm3103 - Luke Matarazzo
+ *  CSCI-243 -- Project 2 - Amigonet
  *  filename: friends.c
- *	asdf
+ *	Contains the linked list/queue data structure to hold the friends list.
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-// #include <stdbool.h>
-// #include <assert.h>
 #include "friends.h"
 
 /*  Function: addNode
@@ -56,7 +55,7 @@ void addNode(User *user, User *amigo)
 			return;
 		}
 
-		//initialize data in node
+		//initialize data in new node
 		newNode->user = amigo;
 		newNode->next = NULL;
 
@@ -64,7 +63,7 @@ void addNode(User *user, User *amigo)
 		nodePtr curNode = user->amigos->firstFriend;
 		nodePtr nextNode = curNode;
 
-		while(nextNode != NULL)
+		while(nextNode != NULL) //get to last node in list
 		{
 			curNode = nextNode;
 			nextNode = curNode->next;
@@ -116,7 +115,7 @@ void removeNode(User *user, User *exAmigo)
  */
 void printList(FriendStruct *friends)
 {
-	//if friends and friend list is not null, print list
+	//if friends and friend list is not null, print list of friends
 	if(friends != NULL && friends->firstFriend != NULL)
 	{
 		nodePtr curNode = friends->firstFriend;
