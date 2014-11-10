@@ -9,6 +9,7 @@
 #include <string.h>
 #include "friends.h"
 
+//return values for functions
 #define FUNC_SUCCESS	1
 #define FUNC_FAILURE	0
 #define NULL_POINTER	-1
@@ -17,7 +18,8 @@
  *  Parameters: user - user who has friends list we're adding to
  *				amigo - friend to add to the linked/friends list
  *  Purpose: Add a given user to another user's friend list.
- *  Returns: An int which is the return status of the function.
+ *  Returns: An int which is the return status of the function. Return codes
+ *	have been defined as macros at the top of the file.
  */
 int addNode(User *user, User *amigo)
 {
@@ -91,7 +93,8 @@ int addNode(User *user, User *amigo)
  *  Parameters: user - User who has friends list
  				exAmigo - User to remove from the friends list
  *  Purpose: Remove a node/friend from one given list via a specific user.
- *  Returns: An int which is the return status of the function.
+ *  Returns: An int which is the return status of the function. Return codes
+ *	have been defined as macros at the top of the file.
  */
 int removeNode(User *user, User *exAmigo)
 {
