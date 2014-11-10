@@ -127,6 +127,7 @@ int dls(const User *user1, const User *user2, int max)
  */
 size_t separation(const User *user1, const User *user2)
 {
+	//do dls with increasing depth until we hit MAX_DEPTH
 	for(int i = 0; i < MAX_DEPTH; i++)
 	{
 		if(dls(user1, user2, i))
