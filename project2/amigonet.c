@@ -96,7 +96,7 @@ size_t dls(const User *user1, const User *user2, int max)
 		nodePtr nextNode = curNode;
 		while(curNode != NULL)
 		{
-			curNode = nextNode->user;
+			curNode = nextNode;
 			nextNode = curNode->next;
 			return dls(curNode->user, user2, max-1);
 		}
