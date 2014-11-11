@@ -29,6 +29,10 @@ int addNode(User *user, User *amigo)
 		return NULL_POINTER; //return true value, but indicate failure
 	}
 
+	//if trying to add user as a friend to itself, return error and don't add
+	if(user == amigo)
+		return FUNC_FAILURE;
+
 	if(user->amigos == NULL) //if user has no friends yet create new list
 	{
 		//malloc friends list and make sure not null
@@ -39,7 +43,7 @@ int addNode(User *user, User *amigo)
 			return NULL_POINTER;
 		}
 
-		//malloc a new node ane make sure not null
+		//malloc a new node and make sure not null
 		user->amigos->firstFriend = (nodePtr)malloc(sizeof(node));
 		if(user->amigos->firstFriend == NULL)
 		{
@@ -71,9 +75,9 @@ int addNode(User *user, User *amigo)
 
 		while(nextNode != NULL) //iterate through list
 		{
-			//make sure they aren't already a friend. return 0 for failure
+			//make sure they aren't already a friend. break from loop
 			if(strcmp(amigo->name, curNode->user->name) == 0)
-				return FUNC_FAILURE;
+				break;
 
 			curNode = nextNode;
 			nextNode = curNode->next;
@@ -81,7 +85,10 @@ int addNode(User *user, User *amigo)
 
 		//check again because last node skips the while loop
 		if(strcmp(amigo->name, curNode->user->name) == 0)
+		{
+			free(newNode);
 			return FUNC_FAILURE;
+		}
 
 		//add new node to end of linked list
 		curNode->next = newNode;
@@ -158,12 +165,11 @@ void printList(FriendStruct *friends)
  */
 void listDestroy(FriendStruct *friends)
 {
-	//if friends and friend list is not null, destroy the list
-	if(friends != NULL && friends->firstFriend != NULL)
+	if(friends != NULL)
 	{
 		nodePtr curNode = friends->firstFriend;
 		nodePtr nextNode = NULL;
-		if(curNode != NULL)
+		while(curNode != NULL)
 		{
 			nextNode = curNode->next;
 			free(curNode);
