@@ -57,7 +57,7 @@ int main(int argc, char * argv[])
 	//initialize all necessary variables
 	static unsigned long curCommand = 1; //current command index
 	char *prevCommands[commandHistory]; //command history array
-	static const char PROMPT[] = "mysh[%d]> ";
+	// static const char PROMPT[] = "mysh[%d]> ";
 
 	//path to search for binaries/commands in
 	static const char path[] = 	"/usr/local/dcs/jdk/bin:/usr/local/dcs/bin:"
@@ -69,23 +69,23 @@ int main(int argc, char * argv[])
 	size_t lineLen = 0;
 	int ret = -1;
 
-	printf("%s", PROMPT, curCommand); //print prompt
+	printf("mysh[%d]> ", curCommand); //print prompt
 	//get line while we have actually read bytes
 	while((ret = getline(&inputBuf, &lineLen, stdin)) > 0)
 	{
 		if(ret == 1) //if only a new line given, prompt and start again
 		{
-			printf("%s", PROMPT, curCommand);
+			printf("mysh[%d]> ", curCommand);
 			continue;
 		}
 
 		inputBuf[ret - 1] = '\0'; //get rid of newline
-		if(strcmp(inputBuf, "quit"))
+		if(!strcmp(inputBuf, "quit"))
 			break;
 
 		printf("you entered '%s'", inputBuf);
 
-		printf("%s", PROMPT, curCommand);
+		printf("mysh[%d]> ", curCommand);
 	}
 
 	return EXIT_SUCCESS;
