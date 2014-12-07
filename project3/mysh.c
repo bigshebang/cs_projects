@@ -12,9 +12,14 @@
 #define EXIT_INVALID_ARG	-1
 
 //global variables
-static short verboseMode = 0; //verbose mode boolean
+static short verboseMode = 0;
 static unsigned long commandHistory = 10;
-char USAGE_MESS[] = "usage: mysh [-v] [-h pos_num]"; //usage message
+static const char USAGE_MESS[] = "usage: mysh [-v] [-h pos_num]";
+
+//path to search for binaries/commands in
+static const char path [] = "/usr/local/dcs/jdk/bin:/usr/local/dcs/bin:"
+							"/usr/local/sbin:/usr/local/bin:/usr/sbin:"
+							"/usr/bin:/sbin:/bin:/usr/games:";
 
 int main(int argc, char * argv[])
 {
