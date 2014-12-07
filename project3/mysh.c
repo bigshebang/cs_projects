@@ -10,7 +10,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 #include "builtin.h"
 
 //return codes
@@ -19,9 +18,12 @@
 //global variables
 static short verboseMode = 0;
 
-
 int main(int argc, char * argv[])
 {
+	//variables
+	static unsigned long commandHistory = 10;
+	static const char USAGE_MESS[] = "usage: mysh [-v] [-h pos_num]";
+
 	if(argc > 1) //parse options if any given
 	{
 		if(strcmp("-v", argv[1]) == 0) //if verbose option given
@@ -53,27 +55,37 @@ int main(int argc, char * argv[])
 	}
 
 	//initialize all necessary variables
-	static unsigned long commandHistory = 10;
-	static unsigned long curCommand = 1;
-	static const char PROMPT[] = "mysh[%s]> ";
-	static const char USAGE_MESS[] = "usage: mysh [-v] [-h pos_num]";
+	static unsigned long curCommand = 1; //current command index
+	char *prevCommands[commandHistory]; //command history array
+	static const char PROMPT[] = "mysh[%d]> ";
 
 	//path to search for binaries/commands in
 	static const char path[] = 	"/usr/local/dcs/jdk/bin:/usr/local/dcs/bin:"
 								"/usr/local/sbin:/usr/local/bin:/usr/sbin:"
 								"/usr/bin:/sbin:/bin:/usr/games:";
 
-	char *prevCommands[commandHistory]; //command history array
-
+	//variables needed for getting input
 	char *inputBuf = NULL;
+	size_t lineLen = 0;
+	int ret = -1;
 
+	printf("%s", PROMPT, curCommand); //print prompt
 	//get line while we have actually read bytes
-	while((size_t ret = getline(&inputBuf, 0, stdin)) >= 0)
+	while((ret = getline(&inputBuf, &lineLen, stdin)) > 0)
 	{
-		if(strcmp(inputBuf, EOF) == 0 || strcmp(inputBuf, "quit"))
+		if(ret == 1) //if only a new line given, prompt and start again
+		{
+			printf("%s", PROMPT, curCommand);
+			continue;
+		}
+
+		inputBuf[ret - 1] = '\0'; //get rid of newline
+		if(strcmp(inputBuf, "quit"))
 			break;
 
 		printf("you entered '%s'", inputBuf);
+
+		printf("%s", PROMPT, curCommand);
 	}
 
 	return EXIT_SUCCESS;
