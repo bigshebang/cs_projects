@@ -85,8 +85,8 @@ int main(int argc, char * argv[])
 			char *tempBuf = NULL;
 
 			if(ret > 0) //if no number found there was an error. keep it NULL
-			tempBuf = getCommand(prevCommands, commHistSize, curCommand,
-								 tempNum);
+				tempBuf = getCommand(prevCommands, commHistSize, curCommand,
+									 tempNum);
 
 			if(!tempBuf) //if null, there was an error
 			{
