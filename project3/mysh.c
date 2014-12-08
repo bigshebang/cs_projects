@@ -57,27 +57,56 @@ int main(int argc, char * argv[])
 	// static const char PROMPT[] = "mysh[%d]> ";
 
 	//path to search for binaries/commands in
-	static const char path[] = 	"/usr/local/dcs/jdk/bin:/usr/local/dcs/bin:"
-								"/usr/local/sbin:/usr/local/bin:/usr/sbin:"
-								"/usr/bin:/sbin:/bin:/usr/games:";
+	// static const char path[] = 	"/usr/local/dcs/jdk/bin:/usr/local/dcs/bin:"
+	// 							"/usr/local/sbin:/usr/local/bin:/usr/sbin:"
+	// 							"/usr/bin:/sbin:/bin:/usr/games:";
 
 	//variables needed for getting input
 	char *inputBuf = NULL;
 	size_t lineLen = 0;
 	int ret = -1;
 
-	printf("mysh[%d]> ", curCommand); //print prompt
+	printf("mysh[%lu]> ", curCommand); //print prompt
 	//get line, process while we have actually read bytes
 	while((ret = getline(&inputBuf, &lineLen, stdin)) > 0)
 	{
 		if(ret == 1) //if only a new line given, prompt and start again
 		{
-			printf("mysh[%d]> ", curCommand);
+			printf("mysh[%lu]> ", curCommand);
 			continue;
 		}
 
-		//remove trailing newline, add to command history
-		inputBuf[ret - 1] = '\0';
+		//handle if ! was given, get given command history index
+		if(inputBuf[0] == '!')
+		{
+			//get the num after the !
+			unsigned long tempNum = 0;
+			int ret = sscanf(inputBuf, "!%lu", &tempNum);
+			char *tempBuf = NULL;
+
+			if(ret > 0) //if no number found there was an error. keep it NULL
+			tempBuf = getCommand(prevCommands, commHistSize, curCommand,
+								 tempNum);
+
+			if(!tempBuf) //if null, there was an error
+			{
+				fprintf(stderr, "Invalid command index number given.\n");
+				continue;
+			}
+			else //if not null, realloc and copy string to inputBuf
+			{
+				char *temp = (char*)realloc(inputBuf, sizeof(*tempBuf));
+				if(temp)
+				{
+					inputBuf = temp;
+					strcpy(inputBuf, tempBuf);
+				}
+			}
+		}
+		else //remove trailing newline if no ! given
+			inputBuf[ret - 1] = '\0';
+
+		//add command to history
 		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
 
 		if(!strcmp(inputBuf, "quit"))
@@ -90,8 +119,11 @@ int main(int argc, char * argv[])
 
 		//split input by spaces - grab code from project 1 using the tok function or whatever
 
-		printf("mysh[%d]> ", ++curCommand);
+		printf("mysh[%lu]> ", ++curCommand);
 	}
+
+	//memory management
+	free(inputBuf);
 
 	//if CTRL-D pressed/EOF, print newline for formatting
 	if(ret < 1)
