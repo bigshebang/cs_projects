@@ -85,12 +85,13 @@ int main(int argc, char * argv[])
 			char *tempBuf = NULL;
 
 			if(ret > 0) //if no number found there was an error. keep it NULL
-			tempBuf = getCommand(prevCommands, commHistSize, curCommand,
+				tempBuf = getCommand(prevCommands, commHistSize, curCommand,
 								 tempNum);
 
 			if(!tempBuf) //if null, there was an error
 			{
 				fprintf(stderr, "Invalid command index number given.\n");
+				printf("mysh[%lu]> ", curCommand);
 				continue;
 			}
 			else //if not null, realloc and copy string to inputBuf
