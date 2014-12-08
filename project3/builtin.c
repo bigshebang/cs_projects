@@ -4,6 +4,8 @@
  *	Implementation of builtin shell functions.
  */
 
+#include <assert.h>
+
 #include "builtin.h"
 
 /*  Function: initHistory
@@ -52,8 +54,17 @@ int addCommand(char **commands, unsigned long size, const char *command,
  */
 void printHistory(char **commands, unsigned long size, unsigned long current)
 {
-	for(unsigned long i = current - size + 1; i <= current; i++)
-		printf("%u: %s\n", i, commands[(i-1) % size]);
+	assert(commands != NULL);
+
+	//get relative command number, start at 1 if not more than given size
+	unsigned long i = 1;
+	if(current > size)
+		i = current - size + 1;
+
+	//(i-1) % size will get the proper index, because the command history is a
+	//circular array/buffer
+	for(; i <= current; i++)
+		printf("\t%zu: %s\n", i, commands[(i-1) % size]);
 }
 
 /*  Function: destroyHistory
