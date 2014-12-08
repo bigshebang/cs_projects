@@ -4,6 +4,8 @@
  *	Implementation of builtin shell functions.
  */
 
+#include "builtin.h"
+
 /*  Function: initHistory
  *  Parameters: commands - array of strings containing the command history
  				size - size of the given array
@@ -28,17 +30,18 @@ int addCommand(char **commands, unsigned long size, const char *command,
 			   unsigned long current)
 {
 	if(!commands)
-		return -1;
+		return EXIT_FAILURE;
 
-	curIndex = (current - 1) % size; //current index in the array
+	unsigned long curIndex = (current - 1) % size; //current index in the array
 
 	//realloc a temp pointer, have array point there, copy string over
 	char *temp = (char*)realloc(commands[curIndex], sizeof(command));
 	if(!temp)
-		return -2;
+		return EXIT_FAILURE;
 
 	commands[curIndex] = temp;
 	strcpy(commands[curIndex], command);
+	return EXIT_SUCCESS;
 }
 
 /*  Function: printHistory
@@ -50,7 +53,7 @@ int addCommand(char **commands, unsigned long size, const char *command,
 void printHistory(char **commands, unsigned long size, unsigned long current)
 {
 	for(unsigned long i = current - size + 1; i <= current; i++)
-		printf("%d: %s\n", i, commands[(i-1) % size]);
+		printf("%u: %s\n", i, commands[(i-1) % size]);
 }
 
 /*  Function: destroyHistory
