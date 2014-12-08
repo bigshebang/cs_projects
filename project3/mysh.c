@@ -21,7 +21,7 @@ static short verboseMode = 0;
 int main(int argc, char * argv[])
 {
 	//variables
-	static unsigned long commandHistory = 10;
+	static unsigned long commHistSize = 10;
 	static const char USAGE_MESS[] = "usage: mysh [-v] [-h pos_num]";
 
 	if(argc > 1) //parse options if any given
@@ -34,7 +34,7 @@ int main(int argc, char * argv[])
 			{
 				long temp = strtol(argv[2], NULL, 10);
 				if(temp > 0) //if positive num, update command history
-					commandHistory = temp;
+					commHistSize = temp;
 				else
 				{
 					fprintf(stderr, "%s\n", USAGE_MESS);
@@ -56,7 +56,8 @@ int main(int argc, char * argv[])
 
 	//initialize all necessary variables
 	static unsigned long curCommand = 1; //current command index
-	char *prevCommands[commandHistory]; //command history array
+	char *prevCommands[commHistSize]; //command history array
+	initHistory(prevCommands, commHistSize); //initialize prevCommands array
 	// static const char PROMPT[] = "mysh[%d]> ";
 
 	//path to search for binaries/commands in
@@ -70,7 +71,7 @@ int main(int argc, char * argv[])
 	int ret = -1;
 
 	printf("mysh[%d]> ", curCommand); //print prompt
-	//get line while we have actually read bytes
+	//get line, process while we have actually read bytes
 	while((ret = getline(&inputBuf, &lineLen, stdin)) > 0)
 	{
 		if(ret == 1) //if only a new line given, prompt and start again
@@ -79,13 +80,21 @@ int main(int argc, char * argv[])
 			continue;
 		}
 
-		inputBuf[ret - 1] = '\0'; //get rid of newline
+		//remove trailing newline, add to command history
+		inputBuf[ret - 1] = '\0';
+		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
+
 		if(!strcmp(inputBuf, "quit"))
 			break;
 
-		printf("you entered '%s'", inputBuf);
+		printf("'%s'\n", inputBuf);
 
-		printf("mysh[%d]> ", curCommand);
+		if(!strcmp(inputBuf, "history"))
+			printHistory(prevCommands, commHistSize, curCommand);
+
+		//split input by spaces - grab code from project 1 using the tok function or whatever
+
+		printf("mysh[%d]> ", ++curCommand);
 	}
 
 	return EXIT_SUCCESS;
