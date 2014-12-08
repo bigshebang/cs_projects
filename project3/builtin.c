@@ -37,7 +37,7 @@ int addCommand(char **commands, unsigned long size, const char *command,
 	unsigned long curIndex = (current - 1) % size; //current index in the array
 
 	//realloc a temp pointer, have array point there, copy string over
-	char *temp = (char*)realloc(commands[curIndex], sizeof(command));
+	char *temp = (char*)realloc(commands[curIndex], strlen(command) + 1);
 	if(!temp)
 		return EXIT_FAILURE;
 

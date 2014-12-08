@@ -96,7 +96,7 @@ int main(int argc, char * argv[])
 			}
 			else //if not null, realloc and copy string to inputBuf
 			{
-				char *temp = (char*)realloc(inputBuf, sizeof(*tempBuf));
+				char *temp = (char*)realloc(inputBuf, strlen(tempBuf) + 1);
 				if(temp)
 				{
 					inputBuf = temp;
@@ -125,6 +125,7 @@ int main(int argc, char * argv[])
 
 	//memory management
 	free(inputBuf);
+	destroyHistory(prevCommands, commHistSize);
 
 	//if CTRL-D pressed/EOF, print newline for formatting
 	if(ret < 1)
