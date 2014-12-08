@@ -4,7 +4,8 @@
  *	Header file for builtin shell functions.
  */
 
-int addCommand(char **commands, unsigned long size, char *command,
+void initHistory(char **commands, unsigned long size);
+int addCommand(char **commands, unsigned long size, const char *command,
 			   unsigned long current);
-void printHistory(char **commands, unsigned long size);
+void printHistory(char **commands, unsigned long size, unsigned long current);
 void destroyHistory(char **commands, unsigned long size);
