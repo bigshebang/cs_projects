@@ -4,6 +4,18 @@
  *	Implementation of builtin shell functions.
  */
 
+/*  Function: initHistory
+ *  Parameters: commands - array of strings containing the command history
+ 				size - size of the given array
+ *  Purpose: Initialize a command history array to have all null pointers
+ *  Returns: Nothing.
+ */
+void initHistory(char **commands, unsigned long size)
+{
+	for(unsigned long i = 0; i < size; i++)
+		commands[i] = NULL;
+}
+
 /*  Function: addCommand
  *  Parameters: commands - array of strings containing the command history
  				size - size of the given array
@@ -12,10 +24,21 @@
  *  Purpose: Add given command to the command history list.
  *  Returns: 0 if successful, nonzero if failure.
  */
-int addCommand(char **commands, unsigned long size, char *command
+int addCommand(char **commands, unsigned long size, const char *command,
 			   unsigned long current)
 {
-	//code
+	if(!commands)
+		return -1;
+
+	curIndex = (current - 1) % size; //current index in the array
+
+	//realloc a temp pointer, have array point there, copy string over
+	char *temp = (char*)realloc(commands[curIndex], sizeof(command));
+	if(!temp)
+		return -2;
+
+	commands[curIndex] = temp;
+	strcpy(commands[curIndex], command);
 }
 
 /*  Function: printHistory
@@ -24,9 +47,10 @@ int addCommand(char **commands, unsigned long size, char *command
  *  Purpose: Print the command history.
  *  Returns: Nothing.
  */
-void printHistory(char **commands, unsigned long size)
+void printHistory(char **commands, unsigned long size, unsigned long current)
 {
-	//code
+	for(unsigned long i = current - size + 1; i <= current; i++)
+		printf("%d: %s\n", i, commands[(i-1) % size]);
 }
 
 /*  Function: destroyHistory
@@ -37,5 +61,6 @@ void printHistory(char **commands, unsigned long size)
  */
 void destroyHistory(char **commands, unsigned long size)
 {
-	//code
+	for(unsigned long i = 0; i < size; i++)
+		free(commands[i]);
 }
