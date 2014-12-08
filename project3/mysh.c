@@ -93,5 +93,9 @@ int main(int argc, char * argv[])
 		printf("mysh[%d]> ", ++curCommand);
 	}
 
+	//if CTRL-D pressed/EOF, print newline for formatting
+	if(ret < 1)
+		putchar('\n');
+
 	return EXIT_SUCCESS;
 }
