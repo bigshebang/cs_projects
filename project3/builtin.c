@@ -58,15 +58,14 @@ int addCommand(char **commands, unsigned long size, const char *command,
 char *getCommand(char **commands, unsigned long size, unsigned long current,
 				 unsigned long command)
 {
-	if(command > current || command <= (current - size)) //if invalid number
+	if(command >= current || command <= 0) //if invalid number
 		return NULL;
 
-	//get relative index
-	unsigned long index = 0;
-	if(current > size)
-		index = current - size;
+	//need this check once current command index exceeds max history size
+	if(current > size && command < (current - size))
+		return NULL;
 
-	return commands[index % size]; //return requested command
+	return commands[(command - 1) % size]; //return requested command
 }
 
 /*  Function: printHistory
