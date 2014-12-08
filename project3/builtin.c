@@ -55,7 +55,7 @@ int addCommand(char **commands, unsigned long size, const char *command,
  *  Returns: String containing the desired command if found successfully, NULL
  	if the command number was out of bounds.
  */
-char *getCommand(char **commands, unsigned long size, unsigned long current
+char *getCommand(char **commands, unsigned long size, unsigned long current,
 				 unsigned long command)
 {
 	if(command > current || command <= (current - size)) //if invalid number
