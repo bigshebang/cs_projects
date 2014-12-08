@@ -4,6 +4,10 @@
  *	Header file for builtin shell functions.
  */
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 void initHistory(char **commands, unsigned long size);
 int addCommand(char **commands, unsigned long size, const char *command,
 			   unsigned long current);
