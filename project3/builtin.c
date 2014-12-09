@@ -101,3 +101,51 @@ void destroyHistory(char **commands, unsigned long size)
 	for(unsigned long i = 0; i < size; i++)
 		free(commands[i]);
 }
+
+/*  Function: split
+ *  Parameters: str - string to parse
+ 				delim - delimeter to split by
+ *  Purpose: Split the given string based on the given delimeter and reate an
+ 	array of strings.
+ *  Returns: String array.
+ */
+char **split(const char *str, const *char delim)
+{
+	//code
+}
+
+/*  Function: echo
+ *  Parameters: args - string array of arguments to print
+ *  Purpose: Print the given arguments to stdout.
+ *  Returns: Nothing.
+ */
+void echo(const char **args, size_t size)
+{
+	for(size_t i = 0; i < size; i++)
+	{
+		printf("%s", args[i]);
+		printf("%s", (i == (size -1)) ? "" : " " ); //don't put space for last
+	}
+
+	putchar('\n');
+}
+
+/*  Function: help
+ *  Parameters: Nothing.
+ *  Purpose: Print help containing internal commands for this shell.
+ *  Returns: Nothing.
+ */
+void help()
+{
+	//code
+}
+
+/*  Function: verbose
+ *  Parameters: Not sure yet. probably verbose flag?
+ *  Purpose: Handle verbose command, toggle verbose flag? Do all output stuffz.
+ *  Returns: Not sure yet, probz void.
+ */
+void verbose()
+{
+	//code
+}
