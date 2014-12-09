@@ -76,6 +76,7 @@ int main(int argc, char * argv[])
 			continue;
 		}
 
+		short resetBuf = 0;
 		//handle if ! was given, get given command history index
 		if(inputBuf[0] == '!')
 		{
@@ -99,6 +100,7 @@ int main(int argc, char * argv[])
 				char *temp = (char*)realloc(inputBuf, strlen(tempBuf) + 1);
 				if(temp)
 				{
+					resetBuf = 1;
 					inputBuf = temp;
 					strcpy(inputBuf, tempBuf);
 				}
@@ -119,6 +121,20 @@ int main(int argc, char * argv[])
 			printHistory(prevCommands, commHistSize, curCommand);
 
 		//split input by spaces - grab code from project 1 using the tok function or whatever
+		char ** args = NULL;
+		size_t argSize = split(inputBuf, args);
+
+		if(!strcmp(args[1], "echo"))
+			echo(args[1], argSize - 1);
+		else if(true)
+			puts("temporary");
+
+		//free the input buf here to prevent errors in getline if we got a !
+		if(resetBuf)
+		{
+			free(inputBuf);
+			inputBuf = NULL;
+		}
 
 		printf("mysh[%lu]> ", ++curCommand);
 	}
