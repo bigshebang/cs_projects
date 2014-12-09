@@ -109,11 +109,11 @@ int main(int argc, char * argv[])
 		else //remove trailing newline if no ! given
 			inputBuf[ret - 1] = '\0';
 
-		//add command to history
-		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
-
 		if(!strcmp(inputBuf, "quit"))
 			break;
+
+		//add command to history
+		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
 
 		printf("'%s'\n", inputBuf);
 
