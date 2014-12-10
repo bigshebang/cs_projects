@@ -95,7 +95,7 @@ void printHistory(char **commands, unsigned long size, unsigned long current)
 /*  Function: destroyHistory
  *  Parameters: commands - array of strings containing the command history
  				size - size of the given array
- *  Purpose: Print the command history.
+ *  Purpose: Free the command history.
  *  Returns: Nothing.
  */
 void destroyHistory(char **commands, unsigned long size)
