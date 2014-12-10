@@ -16,10 +16,10 @@ char *getCommand(char **commands, unsigned long size, unsigned long current,
 void printHistory(char **commands, unsigned long size, unsigned long current);
 void destroyHistory(char **commands, unsigned long size);
 
-size_t split(char *str, char **dst);
+int split(char *str, char ***dst);
 int charAt(const char *str, const char c);
-int countSpaces(const char *str);
+int countArgs(const char *str);
 void destroyArgs(char **str, int size);
-void echo(const char **args, size_t size);
+void echo(char **args, size_t size, size_t start);
 void help();
 void verbose();

@@ -106,22 +106,20 @@ void destroyHistory(char **commands, unsigned long size)
 
 /*  Function: split
  *  Parameters: str - string to parse
- 				dst - destination array of new, parsed args
+ 				dst - pointer to destination array of new, parsed args
  *  Purpose: Split the given string based on the given delimeter and reate an
  	array of strings.
- *  Returns: Size of the strings array dst when done parsing. -1 if failure or
- 	spaces not found.
+ *  Returns: Size of the strings array dst when done parsing. -1 if failure to
+	allocate memory
  */
-int split(char *str, char **dst)
+int split(char *str, char ***dst)
 {
-	//get number of spaces, aka num of different args
-	int size = countSpaces(str);
-	if(!size) //if no spaces we're done
-		return EXIT_ARG_FAILURE;
+	//get number of different args
+	int size = countArgs(str) + 1;
 
 	//malloc enough room to hold all args. make sure not NULL
-	dst = (char**)malloc(size);
-	if(!dst)
+	*dst = (char**)malloc(sizeof(char*) * size);
+	if(!*dst)
 		return EXIT_ARG_FAILURE;
 
 	//vars needed for while loop
@@ -131,44 +129,43 @@ int split(char *str, char **dst)
 
 	while(counter < size)
 	{
-		last = index; //save last index
-
 		//if first char is a quote, get index of next quote found
-		if(str[index] == '"' || str[index] == "\'")
+		if(str[index] == '"' || str[index] == '\'')
 		{
-			index += strcspn(str[++index], "\"'");
+			index++;
+			index += strcspn((str + index), "\"'");
 			last++;
 		}
 		else //if not, get index of next space
 		{
-			index += charAt(str[index], ' ');
+			index += charAt((str + index), ' ');
 
-			if(index < last) //if no spaces found, that's a problem...exit
+			//if current index is a space, move up 1 and loop again
+			if(index == last)
 			{
-				destroyArgs(dst, size);
-				return EXIT_ARG_FAILURE;
-			}
-
-			//if current index is a space, move up 1 and try again
-			while(index == last)
-			{
-				index += charAt(str[++index], ' ');
+				index++;
 				last++;
+				continue;
 			}
+
+			if(index < last) //if no spaces left, copy rest of the string over
+				index = strlen(str) + 1;
 		}
 
 		//malloc space for new string, make sure not NULL
 		int diff = index++ - last;
-		dst[counter] = (char*)malloc(diff + 1);
-		if(!dst[counter])
+		(*dst)[counter] = (char*)malloc(diff + 1);
+		if(!(*dst)[counter])
 		{
-			destroyArgs(dst, size);
+			destroyArgs(*dst, size);
 			return EXIT_ARG_FAILURE;
 		}
 
 		//copy string over, and manually add trailing NUL byte
-		strncpy(dst[counter], str[last], diff);
-		dst[counter++][diff] = '\0';
+		strncpy((*dst)[counter], (str + last), diff);
+		(*dst)[counter++][diff] = '\0';
+
+		last = index; //save last index
 	}
 
 	return size;
@@ -190,7 +187,7 @@ int charAt(const char *str, const char c)
 	return -1;
 }
 
-/*  Function: countSpaces
+/*  Function: countArgs
  *  Parameters: str - string to count in
  *  Purpose: Count how many times a space is in the given str, but not
  	counting the ones inside of single or double quotes. Done somewhat lazily
@@ -198,14 +195,23 @@ int charAt(const char *str, const char c)
  	account for a single quote inside a double and vice versa.
  *	Returns: Number of times a space is in the str excluding those in quotes.
  */
-int countSpaces(const char *str)
+int countArgs(const char *str)
 {
 	short toggle = 1;
+	short last = 1;
 	int count = 0;
+	printf("str is %s\n", str);
 	for(size_t i = 0; i < strlen(str); i++)
 	{
-		if(str[i] == ' ' && toggle > 0) //if not inside quoted text
+		if(last < 0 && str[i] != ' ')
+			last *= -1;
+
+		//if not inside quoted text and not a consecutive space
+		if(str[i] == ' ' && toggle > 0 && last > 0)
+		{
 			count++;
+			last *= -1;
+		}
 		else if(str[i] == '\'' || str[i] == '"') //if inside quoted text
 			toggle *= -1;
 	}
@@ -235,11 +241,11 @@ void destroyArgs(char **str, int size)
  *  Purpose: Print the given arguments to stdout.
  *  Returns: Nothing.
  */
-void echo(const char **args, size_t size)
+void echo(char **args, size_t size, size_t start)
 {
 	size_t i;
-	for(i = 0; i < (size - 1); i++)
-		printf("%s ", args[i])
+	for(i = start; i < (size - 1); i++)
+		printf("%s ", args[i]);
 
 	printf("%s\n", args[i]);	
 }
