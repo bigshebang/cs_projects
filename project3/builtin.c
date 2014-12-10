@@ -8,6 +8,8 @@
 
 #include "builtin.h"
 
+#define EXIT_ARG_FAILURE	-1
+
 /*  Function: initHistory
  *  Parameters: commands - array of strings containing the command history
  				size - size of the given array
@@ -107,32 +109,27 @@ void destroyHistory(char **commands, unsigned long size)
  				dst - destination array of new, parsed args
  *  Purpose: Split the given string based on the given delimeter and reate an
  	array of strings.
- *  Returns: Size of the strings array dst when done parsing.
+ *  Returns: Size of the strings array dst when done parsing. -1 if failure or
+ 	spaces not found.
  */
 int split(char *str, char **dst)
 {
-	//get number of different args, then allocate space for that many strings
+	//get number of spaces, aka num of different args
 	int size = countSpaces(str);
+	if(!size) //if no spaces we're done
+		return EXIT_ARG_FAILURE;
+
+	//malloc enough room to hold all args. make sure not NULL
 	dst = (char**)malloc(size);
-	// char *copy = str;
+	if(!dst)
+		return EXIT_ARG_FAILURE;
 
-	//create copy of given string
-	// char *copy = (char*)malloc(strlen(str) + 1);
-	// strcpy(copy, str);
-	// char *backup = copy;
-
-	//strtok first to get command, then handle args in for loop
-	// char *temp = strtok(str, " ");
+	//vars needed for while loop
 	int index = 0;
 	int counter = 0;
-	// char *temp = str;
-	// size_t tempSize = 0;
 	int last;
-	// char delim[3] = " "; //size of three so it can hold "\"'" or a space + NUL
-	int quotes, space;
-	short needQuote = -1;
 
-	while(counter < size) //loop while we can still tokenize
+	while(counter < size)
 	{
 		last = index; //save last index
 
@@ -148,8 +145,8 @@ int split(char *str, char **dst)
 
 			if(index < last) //if no spaces found, that's a problem...exit
 			{
-				free(dst);
-				return -1;
+				destroyArgs(dst, size);
+				return EXIT_ARG_FAILURE;
 			}
 
 			//if current index is a space, move up 1 and try again
@@ -160,175 +157,35 @@ int split(char *str, char **dst)
 			}
 		}
 
-		// if(needQuote > 0) //if we need another quote to match
-		// {
-		// 	index += quotes;
-		// 	needQuote = -1;
-		// }
-		// else //if we don't need to find a matching quote
-		// {
-		// 	space = charAt(str[index], ' '); //get space index
-		// 	if(quotes < space) //if we found a quote first
-		// 	{
-		// 		index += quotes;
-		// 		needQuote = 1;
-		// 	}
-		// 	else //if we found a space first
-		// 		index += space;
-		// }
-
-		// if(index < 0) //if no more spaces
-		// 	break;
-
-		//malloc space for new string and copy it to dst
-		// dst[counter] = (char*)malloc(++index - last);
+		//malloc space for new string, make sure not NULL
 		int diff = index++ - last;
 		dst[counter] = (char*)malloc(diff + 1);
-		strncpy(dst[counter], str[last], diff);
-		dst[counter++][diff] = '\0'; //add trailing NUL byte
-	}
-
-	//tokenize once then loop
-	// temp = strtok(str[tempSize], delim);
-	// while(temp)
-	// {
-	// 	//get size and copy to dst.
-	// 	// tempSize += strlen(temp) + 1;
-	// 	dst[counter] = (char*)malloc(tempSize);
-	// 	strcpy(dst[counter++], temp);
-
-	// 	//get quotes and space index and determine delim
-	// 	quotes = strcspn(str[tempSize], "\"'");
-	// 	space = charAt(str[tempSize], ' ');
-	// 	// delim = (quotes > space) ? "\"'" : " " ;
-
-	// 	//tokenize again
-	// 	// temp = strtok(str[tempSize], delim);
-	// }
-
-	// //tokenize once then loop
-	// temp = strtok(str[tempSize], delim);
-	// while(temp)
-	// {
-	// 	//get size and copy to dst.
-	// 	tempSize += strlen(temp) + 1;
-	// 	dst[counter] = (char*)malloc(tempSize);
-	// 	strcpy(dst[counter++], temp);
-
-	// 	//get quotes and space index and determine delim
-	// 	quotes = strcspn(str[tempSize], "\"'");
-	// 	space = charAt(str[tempSize], ' ');
-	// 	delim = (quotes > space) ? "\"'" : " " ;
-
-	// 	//tokenize again
-	// 	temp = strtok(str[tempSize], delim);
-	// }
-
-	// do
-	// {
-	// 	size_t tempSize = strlen(temp) + 1;
-	// 	// int single = charAt(str[tempSize], '\'');
-	// 	// int dub = charAt(str[tempSize], '"');
-	// 	int quotes = strcspn(str[tempSize], "\"'");
-	// 	int space = charAt(str[tempSize], ' ');
-	// 	char delim[] = (quotes > space) ?  "\"'": " ";
-
-	// 	temp = strtok(str[tempSize], delim);
-	// }
-	// while(temp); //while temp isn't null
-	// while((c = str[index++]) != '\0') //while not a null byte
-	// {
-	// 	int single = charAt(str, '\'');
-	// 	int dub = charAt(str, '"');
-
-	// 	// int space = charAt(str, ' ');
-	// }
-	// for(int i = 0; i < strlen(str); i++)
-	// {
-		// if
-		//code
-	// }
-	// for(size_t i = 0; i < size; i++)
-	// {
-	// 	int index = 0;
-	// 	for(size_t j = 0; j < strlen(str); j++)
-	// 	{
-	// 		//keep track of last
-	// 		// index = strcspn(str, " '\"");
-	// 		//probz better to just make a charAt function and use that instead
-	// 		if(str[j] == '\'') //look for the end '
-	// 		{
-	// 			//code
-	// 		}
-	// 		else if(str[j] == '"') //look for the end "
-	// 		{
-	// 			//code
-	// 		}
-	// 		else //look for a space
-	// 		{
-	// 			index = charAt(str, ' ', j);
-	// 		}
-	// 	}
-		// int single = charAt();
-		// int dub = charAt();
-		// if
-	// }
-/*	while(temp) //while not null, keep tokenizing
-	{
-		//realloc dst to hold new number of strings we have
-		char *tempBuf = (char*)realloc(dst, ++size);
-		if(tempBuf) //if not null, realloc the current string
+		if(!dst[counter])
 		{
-			dst = tempBuf
-			tempBuf = (char*)realloc(dst[size], strlen(temp) + 1);
+			destroyArgs(dst, size);
+			return EXIT_ARG_FAILURE;
 		}
-		// temp = strtok(NULL, " \""); //<- not right delim
+
+		//copy string over, and manually add trailing NUL byte
+		strncpy(dst[counter], str[last], diff);
+		dst[counter++][diff] = '\0';
 	}
-*/
-	// free(backup);
+
 	return size;
 }
 
-//gets more complicated to do it my way
-// char *myStrTok(char *str, const char *delim)
-// {
-// 	if(!str)
-// 		return NULL;
-
-// 	//create a temp buf and copy str to it
-// 	char *temp = (char*)malloc(strlen(str) + 1);
-// 	strcpy(temp, str);
-// 	char c;
-
-// 	// do //increase temp until it hits null or matches the delim
-// 	// {
-// 	// 	str++;
-// 	// 	if((c = *temp++) == '\0')
-// 	// 		return NULL;
-// 	// } while(strchr(delim, c));
-
-// 	// //decrement temp to not include delim, get rest of the string in str
-// 	// temp--;
-// 	// str = temp + strcspn(str, delim);
-
-// 	// if(*s != 0)
-// 	// 	*s++ = 0;
-
-// 	return temp;
-// }
-
-/*  Function: countSpaces
+/*  Function: charAt
  *  Parameters: str - string to count in
  				c - char to find
- *  Purpose: Count how many times the char c is present in the given string.
- *	Returns: Number of occurences of the char c in str.
+ *  Purpose: Find the index of the first occurence of the given character c.
+ *	Returns: Index of first char found, -1 if not found.
  */
 int charAt(const char *str, const char c)
 {
 	for(size_t i = 0; i < strlen(str); i++)
 	{
 		if(str[i] == c)
-			return i;
+			return (int)i; //should be positive, but cast as int
 	}
 	return -1;
 }
@@ -341,18 +198,36 @@ int charAt(const char *str, const char c)
  	account for a single quote inside a double and vice versa.
  *	Returns: Number of times a space is in the str excluding those in quotes.
  */
-size_t countSpaces(const char *str)
+int countSpaces(const char *str)
 {
 	short toggle = 1;
-	for(size_t i, count = 0; i < strlen(str); i++)
+	int count = 0;
+	for(size_t i = 0; i < strlen(str); i++)
 	{
 		if(str[i] == ' ' && toggle > 0) //if not inside quoted text
 			count++;
-		else if(str[i] == '\'' || str[i] == '"')
+		else if(str[i] == '\'' || str[i] == '"') //if inside quoted text
 			toggle *= -1;
 	}
 
 	return count;
+}
+
+/*  Function: destroyArgs
+ *  Parameters: str - array of strings to be destroyed
+ 				size - number of strings in str array
+ *  Purpose: Free all memory associated with str array.
+ *	Returns: Nothing.
+ */
+void destroyArgs(char **str, int size)
+{
+	if(str) //free each string then the array itself if not NULL
+	{
+		for(int i = 0; i < size; i++)
+			free(str[i]);
+
+		free(str);
+	}
 }
 
 /*  Function: echo
