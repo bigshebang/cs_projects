@@ -200,7 +200,6 @@ int countArgs(const char *str)
 	short toggle = 1;
 	short last = 1;
 	int count = 0;
-	printf("str is %s\n", str);
 	for(size_t i = 0; i < strlen(str); i++)
 	{
 		if(last < 0 && str[i] != ' ')
