@@ -120,14 +120,21 @@ int main(int argc, char * argv[])
 		if(!strcmp(inputBuf, "history"))
 			printHistory(prevCommands, commHistSize, curCommand);
 
-		//split input by spaces - grab code from project 1 using the tok function or whatever
-		char ** args = NULL;
-		size_t argSize = split(inputBuf, args);
+		//tokenize input and get it in args
+		char **args = NULL;
+		int argSize = split(inputBuf, &args);
+		if(argSize < 0) //if error found parsing args.
+		{
+			perror("Could not allocate memory");
+			return -1;
+		}
 
-		if(!strcmp(args[1], "echo"))
-			echo(args[1], argSize - 1);
-		else if(true)
-			puts("temporary");
+		/*if(!strcmp(args[0], "echo"))
+			echo(args, argSize - 1, 1);
+		else
+			puts("temporary");*/
+
+		echo(args, argSize, 0);
 
 		//free the input buf here to prevent errors in getline if we got a !
 		if(resetBuf)
@@ -135,6 +142,7 @@ int main(int argc, char * argv[])
 			free(inputBuf);
 			inputBuf = NULL;
 		}
+		destroyArgs(args, argSize);
 
 		printf("mysh[%lu]> ", ++curCommand);
 	}
