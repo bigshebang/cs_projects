@@ -7,19 +7,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "history.h"	//history module
+#include "parse.h"		//parsing args module
 
-void initHistory(char **commands, unsigned long size);
-int addCommand(char **commands, unsigned long size, const char *command,
-			   unsigned long current);
-char *getCommand(char **commands, unsigned long size, unsigned long current,
-				 unsigned long command);
-void printHistory(char **commands, unsigned long size, unsigned long current);
-void destroyHistory(char **commands, unsigned long size);
-
-int split(char *str, char ***dst);
-int charAt(const char *str, const char c);
-int countArgs(const char *str);
-void destroyArgs(char **str, int size);
+//echo the given arguments to the screen with a space between each one
 void echo(char **args, size_t size, size_t start);
+
+//print the help for builtin functions
 void help();
+
+//handle the verbose command; turn verbose mode on or off
 void verbose();
