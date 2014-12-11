@@ -36,7 +36,7 @@ void echo(char **args, size_t size, size_t start)
 void help(const char *usageMess)
 {
 	//print header and usage message
-	puts("mysh help menu")
+	puts("mysh help menu");
 	printf("%s\n", usageMess);
 
 	//info about builtins
@@ -68,7 +68,12 @@ void help(const char *usageMess)
  *  Purpose: Handle verbose command, toggle verbose flag? Do all output stuffz.
  *  Returns: Not sure yet, probz void.
  */
-void verbose()
+void verbose(char *str)
 {
-	//code
+	if(!strcmp(str, "on"))
+		verboseMode = 1;
+	else if(!strcmp(str, "off"))
+		verboseMode = 0;
+	else
+		fprintf(stderr, "Usage: verbose [on|off]\n");
 }
