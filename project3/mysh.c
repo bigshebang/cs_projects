@@ -7,6 +7,7 @@
 #define _GNU_SOURCE
 
 #include "builtin.h"
+#include "external.h"
 
 //return codes
 #define EXIT_INVALID_ARG	-1
@@ -18,7 +19,7 @@ int main(int argc, char * argv[])
 {
 	//variables
 	static unsigned long commHistSize = 10;
-	static const char USAGE_MESS[] = "usage: mysh [-v] [-h pos_num]";
+	static const char USAGE_MESS[] = "Usage: mysh [-v] [-h pos_num]";
 
 	if(argc > 1) //parse options if any given
 	{
@@ -133,7 +134,7 @@ int main(int argc, char * argv[])
 		if(!strcmp(args[0], "verbose")) //turn verbose on/off
 			verbose(args + 1);
 		else if(!strcmp(args[0], "help")) //print help for mysh
-			help();
+			help(USAGE_MESS);
 		else if(!strcmp(args[0], "echo")) //echo their given args
 			echo(args, argSize, 1);
 		else
