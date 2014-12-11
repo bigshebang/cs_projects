@@ -105,13 +105,8 @@ int main(int argc, char * argv[])
 			break;
 		}
 
-		printf("'%s'\n", inputBuf);
-
 		//add command to command history
 		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
-
-		if(!strcmp(inputBuf, "history"))
-			printHistory(prevCommands, commHistSize, curCommand);
 
 		//tokenize input and get it in args
 		char **args = NULL;
@@ -128,9 +123,11 @@ int main(int argc, char * argv[])
 		inputBuf = NULL;
 
 		//process commands and do what they ask
-		if(!strcmp(args[0], "verbose")) //turn verbose on/off
+		if(!strcmp(args[0], "history")) //if they gave history command
+			printHistory(prevCommands, commHistSize, curCommand);
+		else if(!strcmp(args[0], "verbose")) //turn verbose on/off
 		{
-			if(argSize > 1)
+			if(argSize > 2)
 				verbose(args[1]);
 			else
 				verbose("");
@@ -141,7 +138,14 @@ int main(int argc, char * argv[])
 			echo(args, argSize - 1, 1);
 		else //external command, fork dat
 		{
-			ret = run(args);
+			int runRet = 0;
+			//fork/exec command, if -2, child failed so end gracefully
+			if((runRet = run(args)) == -2)
+			{
+				destroyArgs(args, argSize);
+				destroyHistory(prevCommands, commHistSize);
+				return runRet;
+			}
 		}
 
 		//free some memory and print prompt before starting again
