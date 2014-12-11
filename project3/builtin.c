@@ -125,7 +125,7 @@ int split(char *str, char ***dst)
 	//vars needed for while loop
 	int index = 0;
 	int counter = 0;
-	int last;
+	int last = 0;
 
 	while(counter < size)
 	{
