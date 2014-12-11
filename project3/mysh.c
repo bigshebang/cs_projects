@@ -129,7 +129,12 @@ int main(int argc, char * argv[])
 
 		//process commands and do what they ask
 		if(!strcmp(args[0], "verbose")) //turn verbose on/off
-			verbose(args[1]);
+		{
+			if(argSize > 1)
+				verbose(args[1]);
+			else
+				verbose("");
+		}
 		else if(!strcmp(args[0], "help")) //print help for mysh
 			help(USAGE_MESS);
 		else if(!strcmp(args[0], "echo")) //echo their given args
