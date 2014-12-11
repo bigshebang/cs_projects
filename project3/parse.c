@@ -23,7 +23,7 @@ int split(char *str, char ***dst)
 	int size = countArgs(str) + 1;
 
 	//malloc enough room to hold all args. make sure not NULL
-	*dst = (char**)malloc(sizeof(char*) * size);
+	*dst = (char**)malloc(sizeof(char*) * (size + 1));
 	if(!*dst)
 		return EXIT_ARG_FAILURE;
 
@@ -73,7 +73,9 @@ int split(char *str, char ***dst)
 		last = index; //save last index
 	}
 
-	return size;
+	(*dst)[counter] = (char*)0; //terminate array with null pointer
+
+	return ++size;
 }
 
 /*  Function: charAt
