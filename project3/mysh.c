@@ -75,7 +75,7 @@ int main(int argc, char * argv[])
 		{
 			//get the num after the !
 			unsigned long tempNum = 0;
-			int ret = sscanf(inputBuf, "!%lu", &tempNum);
+			ret = sscanf(inputBuf, "!%lu", &tempNum);
 			char *tempBuf = NULL;
 
 			if(ret > 0) //if no number found there was an error. keep it NULL
@@ -101,13 +101,16 @@ int main(int argc, char * argv[])
 		else //remove trailing newline if no ! given
 			inputBuf[ret - 1] = '\0';
 
-		if(!strcmp(inputBuf, "quit"))
+		if(!strncmp(inputBuf, "quit", 4))
+		{
+			free(inputBuf);
 			break;
-
-		//add command to history
-		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
+		}
 
 		printf("'%s'\n", inputBuf);
+
+		//add command to command history
+		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
 
 		if(!strcmp(inputBuf, "history"))
 			printHistory(prevCommands, commHistSize, curCommand);
@@ -115,30 +118,35 @@ int main(int argc, char * argv[])
 		//tokenize input and get it in args
 		char **args = NULL;
 		int argSize = split(inputBuf, &args);
+
 		if(argSize < 0) //if error found parsing args.
 		{
 			perror("mysh");
-			return -1;
+			return EXIT_FAILURE;
 		}
 
 		//we don't need inputBuf any more so free it
 		free(inputBuf);
 		inputBuf = NULL;
 
-		/*if(!strcmp(args[0], "echo"))
-			echo(args, argSize - 1, 1);
+		//process commands and do what they ask
+		if(!strcmp(args[0], "verbose")) //turn verbose on/off
+			verbose(args + 1);
+		else if(!strcmp(args[0], "help")) //print help for mysh
+			help();
+		else if(!strcmp(args[0], "echo")) //echo their given args
+			echo(args, argSize, 1);
 		else
-			puts("temporary");*/
+			puts("time to fork");
 
-		echo(args, argSize, 0);
+		//echo(args, argSize, 0);
 
-		//free memory and print prompt before starting again
+		//free some memory and print prompt before starting again
 		destroyArgs(args, argSize);
 		printf("mysh[%lu]> ", ++curCommand);
 	}
 
 	//memory management
-	free(inputBuf);
 	destroyHistory(prevCommands, commHistSize);
 
 	//if CTRL-D pressed/EOF, print newline for formatting
