@@ -1,10 +1,11 @@
 /*  ljm3103 - Luke Matarazzo
  *  CSCI-243 -- Project 3 - MY SHell
- *  filename: history.h
- *	Header file for command history module. Circle buffer is used to store the
- 	command history.
+ *  filename: external.h
+ *	Header file for the external command handling/running module
  */
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+int run(char **args);
