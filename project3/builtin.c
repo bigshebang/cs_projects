@@ -8,6 +8,8 @@
 
 /*  Function: echo
  *  Parameters: args - string array of arguments to print
+ 				size - size of given string array
+ 				start - what index to start printing from
  *  Purpose: Print the given arguments to stdout.
  *  Returns: Nothing.
  */
@@ -17,7 +19,10 @@ void echo(char **args, size_t size, size_t start)
 	for(i = start; i < (size - 1); i++)
 		printf("%s ", args[i]);
 
-	printf("%s\n", args[i]);	
+	if(size != start) //print last arg with no space after
+		printf("%s\n", args[i]);
+	else //if size == start, only print a newline
+		putchar('\n');
 }
 
 /*  Function: help
