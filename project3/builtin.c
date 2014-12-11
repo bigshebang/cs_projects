@@ -29,8 +29,8 @@ void echo(char **args, size_t size, size_t start)
 }
 
 /*  Function: help
- *  Parameters: Nothing.
- *  Purpose: Print help containing internal commands for this shell.
+ *  Parameters: usageMess - A usage message to print out.
+ *  Purpose: Print help containing internal commands and usage for this shell.
  *  Returns: Nothing.
  */
 void help(const char *usageMess)
@@ -64,9 +64,9 @@ void help(const char *usageMess)
 }
 
 /*  Function: verbose
- *  Parameters: Not sure yet. probably verbose flag?
- *  Purpose: Handle verbose command, toggle verbose flag? Do all output stuffz.
- *  Returns: Not sure yet, probz void.
+ *  Parameters: str - the argument given. Should be on or off.
+ *  Purpose: Change the verbose flag according to given argument.
+ *  Returns: Nothing.
  */
 void verbose(char *str)
 {
