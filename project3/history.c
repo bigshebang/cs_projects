@@ -76,7 +76,8 @@ char *getCommand(char **commands, unsigned long size, unsigned long current,
  */
 void printHistory(char **commands, unsigned long size, unsigned long current)
 {
-	assert(commands != NULL);
+	if(!commands) //if null, do nothing
+		return;
 
 	//get relative command number, start at 1 if not more than given size
 	unsigned long i = 1;
