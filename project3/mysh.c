@@ -138,11 +138,11 @@ int main(int argc, char * argv[])
 		else if(!strcmp(args[0], "help")) //print help for mysh
 			help(USAGE_MESS);
 		else if(!strcmp(args[0], "echo")) //echo their given args
-			echo(args, argSize, 1);
-		else
-			puts("time to fork");
-
-		//echo(args, argSize, 0);
+			echo(args, argSize - 1, 1);
+		else //external command, fork dat
+		{
+			ret = run(args);
+		}
 
 		//free some memory and print prompt before starting again
 		destroyArgs(args, argSize);
