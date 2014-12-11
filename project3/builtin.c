@@ -15,14 +15,17 @@
  */
 void echo(char **args, size_t size, size_t start)
 {
+	if(size == start) //if no args to print, print a newline and exit
+	{
+		putchar('\n');
+		return;
+	}
+
 	size_t i;
 	for(i = start; i < (size - 1); i++)
 		printf("%s ", args[i]);
 
-	if(size != start) //print last arg with no space after
-		printf("%s\n", args[i]);
-	else //if size == start, only print a newline
-		putchar('\n');
+	printf("%s\n", args[i]);
 }
 
 /*  Function: help
