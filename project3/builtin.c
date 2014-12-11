@@ -33,9 +33,34 @@ void echo(char **args, size_t size, size_t start)
  *  Purpose: Print help containing internal commands for this shell.
  *  Returns: Nothing.
  */
-void help()
+void help(char *usageMess)
 {
-	//code
+	//print header and usage message
+	puts("mysh help menu")
+	printf("%s\n", usageMess);
+
+	//info about builtins
+	puts("\necho [args]");
+	puts("\tThis command will print any arguments the user gives it. If no");
+	puts("\targuments are given, just a new line is printed.");
+
+	puts("\nhelp");
+	puts("\tPrint this history.");
+
+	puts("\nhistory");
+	puts("\tThe history command will print a numbered list of the previously");
+	puts("\tentered commands. By default mysh will store the 10 previous");
+	puts("\tcommands, but this number can be changed using the -h option.");
+	puts("\tTo run any of these commands again, just type !x, where x is");
+	puts("\tthe number of the command you want. This number must be within");
+	puts("\tthe valid range of current commands being stored to be");
+	puts("\tsuccessful.");
+
+	puts("\nquit");
+	puts("\tThis will gracefully exit the shell.");
+
+	puts("\nverbose [on|off]");
+	puts("\tThis command allows the user to enable or disable verbose mode.");
 }
 
 /*  Function: verbose

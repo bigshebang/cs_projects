@@ -14,7 +14,7 @@
 void echo(char **args, size_t size, size_t start);
 
 //print the help for builtin functions
-void help();
+void help(char *usageMess);
 
 //handle the verbose command; turn verbose mode on or off
 void verbose();
