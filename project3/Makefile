@@ -1,11 +1,3 @@
-#
-# Created by gmakemake (Ubuntu Jul 25 2014) on Wed Dec 10 22:29:00 2014
-#
-
-#
-# Definitions
-#
-
 .SUFFIXES:
 .SUFFIXES:	.a .o .c .C .cpp .s .S
 .c.o:
@@ -41,21 +33,15 @@ LINK.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c
 CPP = $(CPP) $(CPPFLAGS)
-########## Flags from header.mak
-
 CFLAGS = -Wall -Wextra -pedantic -std=c99 -ggdb
-
-########## End of flags from header.mak
-
-
 CPP_FILES =	
-C_FILES =	builtin.c history.c mysh.c parse.c
+C_FILES =	builtin.c external.c history.c mysh.c parse.c
 PS_FILES =	
 S_FILES =	
-H_FILES =	builtin.h history.h parse.h
+H_FILES =	builtin.h external.h history.h parse.h
 SOURCEFILES =	$(H_FILES) $(CPP_FILES) $(C_FILES) $(S_FILES)
 .PRECIOUS:	$(SOURCEFILES)
-OBJFILES =	builtin.o history.o parse.o 
+OBJFILES =	builtin.o external.o history.o parse.o 
 
 #
 # Main targets
@@ -71,8 +57,9 @@ mysh:	mysh.o $(OBJFILES)
 #
 
 builtin.o:	builtin.h history.h parse.h
+external.o:	external.h
 history.o:	history.h
-mysh.o:	builtin.h history.h parse.h
+mysh.o:	builtin.h external.h history.h parse.h
 parse.o:	parse.h
 
 #
