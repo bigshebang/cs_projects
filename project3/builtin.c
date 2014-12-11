@@ -33,7 +33,7 @@ void echo(char **args, size_t size, size_t start)
  *  Purpose: Print help containing internal commands for this shell.
  *  Returns: Nothing.
  */
-void help(char *usageMess)
+void help(const char *usageMess)
 {
 	//print header and usage message
 	puts("mysh help menu")
