@@ -54,12 +54,6 @@ int main(int argc, char * argv[])
 	static unsigned long curCommand = 1; //current command index
 	char *prevCommands[commHistSize]; //command history array
 	initHistory(prevCommands, commHistSize); //initialize prevCommands array
-	// static const char PROMPT[] = "mysh[%d]> ";
-
-	//path to search for binaries/commands in
-	// static const char path[] = 	"/usr/local/dcs/jdk/bin:/usr/local/dcs/bin:"
-	// 							"/usr/local/sbin:/usr/local/bin:/usr/sbin:"
-	// 							"/usr/bin:/sbin:/bin:/usr/games:";
 
 	//variables needed for getting input
 	char *inputBuf = NULL;
@@ -76,7 +70,6 @@ int main(int argc, char * argv[])
 			continue;
 		}
 
-		short resetBuf = 0;
 		//handle if ! was given, get given command history index
 		if(inputBuf[0] == '!')
 		{
@@ -100,7 +93,6 @@ int main(int argc, char * argv[])
 				char *temp = (char*)realloc(inputBuf, strlen(tempBuf) + 1);
 				if(temp)
 				{
-					resetBuf = 1;
 					inputBuf = temp;
 					strcpy(inputBuf, tempBuf);
 				}
@@ -125,9 +117,13 @@ int main(int argc, char * argv[])
 		int argSize = split(inputBuf, &args);
 		if(argSize < 0) //if error found parsing args.
 		{
-			perror("Could not allocate memory");
+			perror("mysh");
 			return -1;
 		}
+
+		//we don't need inputBuf any more so free it
+		free(inputBuf);
+		inputBuf = NULL;
 
 		/*if(!strcmp(args[0], "echo"))
 			echo(args, argSize - 1, 1);
@@ -136,14 +132,8 @@ int main(int argc, char * argv[])
 
 		echo(args, argSize, 0);
 
-		//free the input buf here to prevent errors in getline if we got a !
-		if(resetBuf)
-		{
-			free(inputBuf);
-			inputBuf = NULL;
-		}
+		//free memory and print prompt before starting again
 		destroyArgs(args, argSize);
-
 		printf("mysh[%lu]> ", ++curCommand);
 	}
 
