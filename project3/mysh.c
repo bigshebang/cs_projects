@@ -150,7 +150,7 @@ int main(int argc, char * argv[])
 				progRet = runRet;
 				break;
 			}
-			if(!runRet || verboseMode)
+			if(runRet || verboseMode)
 				printf("Command status: %d\n", runRet);
 		}
 
