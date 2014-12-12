@@ -100,6 +100,9 @@ int main(int argc, char * argv[])
 		else //remove trailing newline if no ! given
 			inputBuf[ret - 1] = '\0';
 
+		if(verboseMode)
+			printf("\tCommand: %s\n\n", inputBuf);
+
 		if(!strncmp(inputBuf, "quit", 4))
 			break;
 
@@ -119,6 +122,7 @@ int main(int argc, char * argv[])
 			perror("mysh");
 			ret = 1;
 			progRet = EXIT_FAILURE;
+			break;
 		}
 
 		//process commands and do what they ask
@@ -146,6 +150,8 @@ int main(int argc, char * argv[])
 				progRet = runRet;
 				break;
 			}
+			if(!runRet || verboseMode)
+				printf("Command status: %d\n", runRet);
 		}
 
 		//free some memory and print prompt before starting again
