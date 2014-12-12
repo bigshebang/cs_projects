@@ -56,6 +56,7 @@ int main(int argc, char * argv[])
 	//variables needed for getting input
 	char *inputBuf = NULL;
 	size_t lineLen = 0;
+	int progRet = EXIT_SUCCESS;
 	int ret = -1;
 
 	printf("mysh[%lu]> ", curCommand); //print prompt
@@ -100,10 +101,7 @@ int main(int argc, char * argv[])
 			inputBuf[ret - 1] = '\0';
 
 		if(!strncmp(inputBuf, "quit", 4))
-		{
-			free(inputBuf);
 			break;
-		}
 
 		//add command to command history
 		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
@@ -112,15 +110,16 @@ int main(int argc, char * argv[])
 		char **args = NULL;
 		int argSize = split(inputBuf, &args);
 
-		if(argSize < 0) //if error found parsing args.
-		{
-			perror("mysh");
-			return EXIT_FAILURE;
-		}
-
 		//we don't need inputBuf any more so free it
 		free(inputBuf);
 		inputBuf = NULL;
+
+		if(argSize < 0) //if error found parsing args.
+		{
+			perror("mysh");
+			ret = 1;
+			progRet = EXIT_FAILURE;
+		}
 
 		//process commands and do what they ask
 		if(!strcmp(args[0], "history")) //if they gave history command
@@ -143,8 +142,9 @@ int main(int argc, char * argv[])
 			if((runRet = run(args)) == -2)
 			{
 				destroyArgs(args, argSize);
-				destroyHistory(prevCommands, commHistSize);
-				return runRet;
+				ret = 1;
+				progRet = runRet;
+				break;
 			}
 		}
 
@@ -155,10 +155,11 @@ int main(int argc, char * argv[])
 
 	//memory management
 	destroyHistory(prevCommands, commHistSize);
+	free(inputBuf);
 
 	//if CTRL-D pressed/EOF, print newline for formatting
 	if(ret < 1)
 		putchar('\n');
 
-	return EXIT_SUCCESS;
+	return progRet;
 }
