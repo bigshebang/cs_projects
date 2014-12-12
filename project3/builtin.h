@@ -3,15 +3,14 @@
  *  filename: builtin.h
  *	Header file for builtin shell functions.
  */
+#ifndef BUILTIN_H
+#define BUILTIN_H
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "history.h"	//history module
 #include "parse.h"		//parsing args module
-
-//global variable for the verboseMode
-static short verboseMode = 0;
 
 //echo the given arguments to the screen with a space between each one
 void echo(char **args, size_t size, size_t start);
@@ -21,3 +20,5 @@ void help(const char *usageMess);
 
 //handle the verbose command; turn verbose mode on or off
 void verbose(char *str);
+
+#endif

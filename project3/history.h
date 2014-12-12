@@ -5,6 +5,9 @@
  	command history.
  */
 
+#ifndef HISTORY_H
+#define HISTORY_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -25,3 +28,5 @@ void printHistory(char **commands, unsigned long size, unsigned long current);
 
 //deallocate dynamic memory needed for history buffer
 void destroyHistory(char **commands, unsigned long size);
+
+#endif

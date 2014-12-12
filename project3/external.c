@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include "external.h"
+#include "parse.h"
 
 #define	EXIT_WAIT_FAIL	-1
 #define EXIT_CHILD_FAIL	-2

@@ -4,9 +4,15 @@
  *	Header file for the argument parsing module.
  */
 
+#ifndef PARSE_H
+#define PARSE_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+//global variable for the verboseMode
+static short verboseMode = 0;
 
 //split args found in a string and add to array of strings
 int split(char *str, char ***dst);
@@ -19,3 +25,5 @@ int countArgs(const char *str);
 
 //deallocate dynamic memory needed for creating the args string array.
 void destroyArgs(char **str, int size);
+
+#endif
