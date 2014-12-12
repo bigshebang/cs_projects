@@ -12,6 +12,9 @@
 //return codes
 #define EXIT_INVALID_ARG	-1
 
+//global verbose flag
+short verboseMode = 0;
+
 int main(int argc, char * argv[])
 {
 	//variables
