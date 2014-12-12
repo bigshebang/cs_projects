@@ -110,7 +110,14 @@ int main(int argc, char * argv[])
 			break;
 
 		//add command to command history
-		addCommand(prevCommands, commHistSize, inputBuf, curCommand);
+		ret = addCommand(prevCommands, commHistSize, inputBuf, curCommand);
+		if(ret) //if nonzero, something failed
+		{
+			perror("mysh");
+			ret = 1;
+			progRet = EXIT_FAILURE;
+			break;
+		}
 
 		//tokenize input and get it in args
 		char **args = NULL;
