@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 //global variable for the verboseMode
-static short verboseMode = 0;
+extern short verboseMode;
 
 //split args found in a string and add to array of strings
 int split(char *str, char ***dst);
