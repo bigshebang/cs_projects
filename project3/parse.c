@@ -32,6 +32,9 @@ int split(char *str, char ***dst)
 	int counter = 0;
 	int last = 0;
 
+	if(verboseMode)
+		puts("\tInput command tokens:");
+
 	while(counter < size)
 	{
 		//if first char is a quote, get index of next quote found
@@ -68,7 +71,10 @@ int split(char *str, char ***dst)
 
 		//copy string over, and manually add trailing NUL byte
 		strncpy((*dst)[counter], (str + last), diff);
-		(*dst)[counter++][diff] = '\0';
+		(*dst)[counter][diff] = '\0';
+
+		if(verboseMode)
+			printf("\t%d: %s\n", counter, (*dst)[counter++]);
 
 		last = index; //save last index
 	}
