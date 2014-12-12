@@ -74,9 +74,10 @@ int split(char *str, char ***dst)
 		(*dst)[counter][diff] = '\0';
 
 		if(verboseMode)
-			printf("\t%d: %s\n", counter, (*dst)[counter++]);
+			printf("\t%d: %s\n", counter, (*dst)[counter]);
 
-		last = index; //save last index
+		counter++;
+		last = index;
 	}
 
 	(*dst)[counter] = (char*)0; //terminate array with null pointer
