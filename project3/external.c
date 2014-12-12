@@ -35,7 +35,7 @@ int run(char **args)
 
 		int ret = execvp(args[0], args); //execute given command with args
 		if(ret == -1) //if problem with exec
-			perror("mysh");
+			perror(args[0]);
 
 		return EXIT_CHILD_FAIL;
 	}
