@@ -30,13 +30,20 @@ int run(char **args)
 	}
 	else if(!pid) //if child
 	{
+		if(verboseMode)
+			printf("\texecvp: %s\n", args[0]);
+
 		int ret = execvp(args[0], args); //execute given command with args
 		if(ret == -1) //if problem with exec
 			perror("mysh");
+
 		return EXIT_CHILD_FAIL;
 	}
 	else //if parent
 	{
+		if(verboseMode)
+			printf("\tWait for pid %d: %s\n", pid, args[0]);
+
 		//wait for child to finish, read exit status and return
 		int status = 0;
 		pid_t ret = waitpid(pid, &status, 0);
